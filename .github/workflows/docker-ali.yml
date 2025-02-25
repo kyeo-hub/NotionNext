@@ -1,0 +1,34 @@
+name: Build and Push Docker Image to Aliyun ACR
+
+on:
+  push:
+    branches:
+        - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 步骤1: 检出代码
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 步骤2: 登录阿里云容器镜像服务
+      - name: Login to Aliyun ACR
+        uses: docker/login-action@v3
+        with:
+          registry: registry.${{ secrets.REGION }}.aliyuncs.com
+          username: ${{ secrets.ALICLOUD_ACCESS_KEY_ID }}
+          password: ${{ secrets.ALICLOUD_ACCESS_KEY_SECRET }}
+
+      # 步骤3: 构建并推送镜像
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: . # Docker构建上下文路径
+          file: ./Dockerfile # Dockerfile路径
+          push: true
+          tags: |
+            registry.${{ secrets.REGION }}.aliyuncs.com/${{ secrets.NAMESPACE }}/${{ secrets.REPO_NAME }}:latest
+            registry.${{ secrets.REGION }}.aliyuncs.com/${{ secrets.NAMESPACE }}/${{ secrets.REPO_NAME }}:${{ github.sha }}
