@@ -3,6 +3,7 @@
 import Comment from '@/components/Comment'
 import { AdSlot } from '@/components/GoogleAdsense'
 import Live2D from '@/components/Live2D'
+import PrintPDF from '@/components/PrintPDF'
 import LoadingCover from '@/components/LoadingCover'
 import NotionIcon from '@/components/NotionIcon'
 import NotionPage from '@/components/NotionPage'
@@ -196,6 +197,7 @@ const LayoutBase = props => {
               }>
               <div className='py-14 sticky top-0'>
                 <ArticleInfo post={props?.post ? props?.post : props.notice} />
+                <PrintPDF />
 
                 <div>
                   {/* 桌面端目录 */}
@@ -210,6 +212,7 @@ const LayoutBase = props => {
                         CONFIG
                       ) === 'true' && <RevolverMaps />}
                       <Live2D />
+                      
                     </>
                   )}
                   {/* gitbook主题首页只显示公告 */}
@@ -218,6 +221,7 @@ const LayoutBase = props => {
 
                 <AdSlot type='in-article' />
                 <Live2D />
+                
               </div>
             </div>
           )}

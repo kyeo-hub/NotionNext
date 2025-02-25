@@ -28,5 +28,14 @@ module.exports = {
 
   // 邮件
   MAILCHIMP_LIST_ID: process.env.MAILCHIMP_LIST_ID || null, // 开启mailichimp邮件订阅 客户列表ID ，具体使用方法参阅文档
-  MAILCHIMP_API_KEY: process.env.MAILCHIMP_API_KEY || null // 开启mailichimp邮件订阅 APIkey
+  MAILCHIMP_API_KEY: process.env.MAILCHIMP_API_KEY || null, // 开启mailichimp邮件订阅 APIkey
+
+  //Coze
+  COZE_BOT_ID: process.env.NEXT_PUBLIC_COZE_BOT_ID || null,
+  // COZE_COMPANY_URL: process.env.COZE_COMPANY_URL || null,
+  // COZE_COMPANY_ICON: process.env.COZE_COMPANY_ICON || null,
+  // COZE_USER_AVATARA: process.env.COZE_USER_AVATARA || null,
+  // COZE_SRC_URL: process.env.COZE_SRC_URL || null,
+  // COZE_TITLE: process.env.COZE_TITLE || null
+
 }
