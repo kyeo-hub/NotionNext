@@ -161,7 +161,7 @@ const LayoutBase = props => {
                   <NavPostList filteredNavPages={filteredNavPages} {...props} />
                 </div>
                 {/* 页脚 */}
-                <Footer {...props} />
+                // <Footer {...props} />
               </div>
             </div>
           )}
@@ -184,16 +184,16 @@ const LayoutBase = props => {
             </div>
 
             {/* 底部 */}
-            <div className='md:hidden'>
-              <Footer {...props} />
-            </div>
+            // <div className='md:hidden'>
+            //   <Footer {...props} />
+            // </div>
           </div>
 
           {/*  右侧 */}
           {fullWidth ? null : (
             <div
               className={
-                'w-72 hidden 2xl:block dark:border-transparent flex-shrink-0 relative z-10 '
+                'w-72 hidden xl:block dark:border-transparent flex-shrink-0 relative z-10 '
               }>
               <div className='py-14 sticky top-0'>
                 <ArticleInfo post={props?.post ? props?.post : props.notice} />
