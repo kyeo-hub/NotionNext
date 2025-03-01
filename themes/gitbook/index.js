@@ -160,8 +160,9 @@ const LayoutBase = props => {
                   {/* 所有文章列表 */}
                   <NavPostList filteredNavPages={filteredNavPages} {...props} />
                 </div>
-                {/* 页脚 */}
-                // <Footer {...props} />
+                {/* 页脚 
+                 <Footer {...props} />
+                 */}
               </div>
             </div>
           )}
@@ -183,10 +184,10 @@ const LayoutBase = props => {
               <WWAds className='w-full' orientation='horizontal' />
             </div>
 
-            {/* 底部 */}
-            // <div className='md:hidden'>
-            //   <Footer {...props} />
-            // </div>
+            {/* 底部 
+             <div className='md:hidden'>
+               <Footer {...props} />
+             </div>*/}
           </div>
 
           {/*  右侧 */}
