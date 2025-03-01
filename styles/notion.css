@@ -558,8 +558,34 @@ summary > .notion-h {
   border-top: 1px solid #e5e7eb !important;
   /* border-bottom-width: 1px; */
 }
-
 .notion-link {
+  color: #1890ff !important; /* 蓝色字体 */
+  text-decoration: none !important; /* 去除下划线 */
+  position: relative;
+  padding: 2px 4px;
+  transition: all 0.3s ease;
+}
+
+.notion-link:hover {
+  background-color: #e6f7ff; /* 浅蓝色背景 */
+}
+
+/* 渐变下划线动画 */
+.notion-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #1890ff 0%, #40a9ff 100%);
+  transition: width 0.3s ease;
+}
+
+.notion-link:hover::after {
+  width: 100%;
+}
+/* .notion-link {
   color: inherit;
   word-break: break-word;
   text-decoration: inherit;
@@ -574,7 +600,7 @@ summary > .notion-h {
 .notion-link:hover {
   border-color: var(--fg-color-6);
   opacity: 1;
-}
+} */
 
 .notion-blank {
   width: 100%;
