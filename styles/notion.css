@@ -561,7 +561,9 @@ summary > .notion-h {
 .notion-link {
   color: #1890ff !important; /* 蓝色字体 */
   word-break: break-word;
+  border-bottom: 0 none !important;
   text-decoration: none !important; /* 去除下划线 */
+  opacity: 1 !important;
   position: relative;
   padding: 2px 4px;
   transition: all 0.3s ease;
@@ -576,7 +578,7 @@ summary > .notion-h {
   content: '';
   position: absolute;
   left: 0;
-  bottom: -3px;
+  bottom: 0px;
   width: 0;
   height: 2px;
   background: linear-gradient(90deg, #1890ff 0%, #40a9ff 100%);

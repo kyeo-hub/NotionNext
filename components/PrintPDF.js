@@ -1,4 +1,6 @@
+import { useGlobal } from '@/lib/global'
 const PrintComponent = () => {
+    const { locale } = useGlobal()
     const handlePrint = () => {
         const iframe = document.createElement('iframe');
         iframe.style.cssText = 'position:fixed; right:-1000px; bottom:-1000px';
@@ -97,13 +99,13 @@ const PrintComponent = () => {
 
     return (
         <div>
-            <button type="button" onClick={handlePrint} title="打印" style={{
+            <button type="button" onClick={handlePrint} title={locale.COMMON.PRINT} style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
                 padding: '6px 12px'
             }}>
-                <span className="text-sm font-semibold text-blue-500 leading-6 tracking-wide">本页内容</span>
+                <span className="text-sm font-semibold text-blue-500 leading-6 tracking-wide">{locale.COMMON.CONTENTS}</span>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" fill="currentColor" aria-label="print icon" name="print" style={{
                     width: '20px',
                     height: '20px',
