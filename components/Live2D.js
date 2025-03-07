@@ -18,7 +18,7 @@ export default function Live2D() {
     if (showPet && !isMobile()) {
       Promise.all([
         loadExternalResource(
-          'https://cdn.jsdelivr.net/npm/cubism4-core@1.0.0/live2dcubismcore.min.js',
+          'https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/live2d.min.js',
           'js'
         )
       ]).then(e => {
