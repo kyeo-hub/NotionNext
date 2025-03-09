@@ -1,5 +1,5 @@
 import { siteConfig } from '@/lib/config'
-import { loadExternalResource } from '@/lib/utils'
+// import { loadExternalResource } from '@/lib/utils'
 import { useEffect } from 'react'
 
 /**
@@ -16,11 +16,12 @@ export default function Bailian() {
         'BAILIAN_CSS_URL',
         'https://g.alicdn.com/aliyun-documentation/web-chatbot-ui/0.0.24/index.css'
     )
+    const title = siteConfig('BAILIAN_TITLE', '百炼大模型')
     const BAILIAN_ENDPOINT = siteConfig('BAILIAN_ENDPOINT', 'http://webchat-bot-41fc.fcv3.1479781705739004.cn-hangzhou.fc.devsapp.net/chat')
     const CHATBOT_CONFIG = {
         endpoint: BAILIAN_ENDPOINT,
         displayByDefault: false, // 默认不显示 AI 助手对话框
-        title: 'AI 助手', // 自定义 AI 助手标题
+        title: title, // 自定义 AI 助手标题
         draggable: true, // 是否开启拖拽
         aiChatOptions: { // 自定义取值参考：https://docs.nlkit.com/nlux/reference/ui/ai-chat#conversation-options
             conversationOptions: { // 自定义取值参考：https://docs.nlkit.com/nlux/reference/ui/ai-chat#conversation-options

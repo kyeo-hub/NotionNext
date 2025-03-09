@@ -2809,6 +2809,11 @@ keyv@^4.0.0, keyv@^4.5.3:
   dependencies:
     json-buffer "3.0.1"
 
+l2d@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.npmmirror.com/l2d/-/l2d-0.1.1.tgz#d275e81464e7893db6d184e0b2e9c7344160ecdc"
+  integrity sha512-wr/OAhLSKRsTACpRziilreKhWKPkZqbO/Nb+1w+lbtqw9q/Re2SclPPXOE1sg2yqIcGw4aTRHzsQturmJsmucA==
+
 language-subtag-registry@^0.3.20:
   version "0.3.23"
   resolved "https://registry.npmmirror.com/language-subtag-registry/-/language-subtag-registry-0.3.23.tgz#23529e04d9e3b74679d70142df3fd2eb6ec572e7"

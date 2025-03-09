@@ -512,4 +512,5 @@ const TianliGPT = dynamic(() => import('@/components/TianliGPT'), {
   ssr: false
 })
 
+
 export default ExternalPlugin
