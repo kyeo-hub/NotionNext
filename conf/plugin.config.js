@@ -38,4 +38,7 @@ module.exports = {
   // COZE_SRC_URL: process.env.COZE_SRC_URL || null,
   // COZE_TITLE: process.env.COZE_TITLE || null
 
+  //Bailian
+  BAILIAN_ENDPOINT: process.env.NEXT_PUBLIC_BAILIAN_ENDPOINT || null
+
 }
