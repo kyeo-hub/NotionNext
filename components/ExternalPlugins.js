@@ -118,6 +118,7 @@ const ExternalPlugin = props => {
   // 默认关闭NProgress
   const ENABLE_NPROGRSS = siteConfig('ENABLE_NPROGRSS', false)
   const COZE_BOT_ID = siteConfig('COZE_BOT_ID')
+  const BAILIAN_ENDPOINT = siteConfig('BAILIAN_ENDPOINT')
   const HILLTOP_ADS_META_ID = siteConfig(
     'HILLTOP_ADS_META_ID',
     null,
@@ -211,6 +212,7 @@ const ExternalPlugin = props => {
       <AosAnimation />
       {ANALYTICS_51LA_ID && ANALYTICS_51LA_CK && <LA51 />}
       {COZE_BOT_ID && <Coze />}
+      {BAILIAN_ENDPOINT && <Bailian />}
 
       {ANALYTICS_51LA_ID && ANALYTICS_51LA_CK && (
         <>
@@ -498,6 +500,9 @@ const AosAnimation = dynamic(() => import('@/components/AOSAnimation'), {
 })
 
 const Coze = dynamic(() => import('@/components/Coze'), {
+  ssr: false
+})
+const Bailian = dynamic(() => import('@/components/Bailian'), {
   ssr: false
 })
 const LA51 = dynamic(() => import('@/components/LA51'), {

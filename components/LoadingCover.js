@@ -34,7 +34,7 @@ export default function LoadingCover() {
         onLoading ? 'animate__fadeIn' : 'animate__fadeOut'
       } flex flex-col justify-center z-50 w-full h-screen fixed top-0 left-0`}>
       <div className='mx-auto'>
-        <style global>
+        <style jsx global>
           {`
           .loader {
             width: 20px;
