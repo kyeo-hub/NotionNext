@@ -39,6 +39,7 @@ import RevolverMaps from './components/RevolverMaps'
 import TagItemMini from './components/TagItemMini'
 import CONFIG from './config'
 import { Style } from './style'
+// import FloatMenu from './components/FloatMenu'
 
 const AlgoliaSearchModal = dynamic(
   () => import('@/components/AlgoliaSearchModal'),
@@ -213,7 +214,7 @@ const LayoutBase = props => {
                         CONFIG
                       ) === 'true' && <RevolverMaps />}
                       <Live2D />
-                      
+
                     </>
                   )}
                   {/* gitbook主题首页只显示公告 */}
@@ -222,14 +223,14 @@ const LayoutBase = props => {
 
                 <AdSlot type='in-article' />
                 <Live2D />
-                
+
               </div>
             </div>
           )}
         </main>
 
         {GITBOOK_LOADING_COVER && <LoadingCover />}
-
+        {/* <FloatMenu /> */}
         {/* 回顶按钮 */}
         <JumpToTopButton />
 
@@ -456,15 +457,15 @@ const Layout404 = props => {
   }, [])
 
   return <>
-        <div className='md:-mt-20 text-black w-full h-screen text-center justify-center content-center items-center flex flex-col'>
-            <div className='dark:text-gray-200'>
-                <h2 className='inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top'><i className='mr-2 fas fa-spinner animate-spin' />404</h2>
-                <div className='inline-block text-left h-32 leading-10 items-center'>
-                    <h2 className='m-0 p-0'>页面无法加载，即将返回首页</h2>
-                </div>
-            </div>
+    <div className='md:-mt-20 text-black w-full h-screen text-center justify-center content-center items-center flex flex-col'>
+      <div className='dark:text-gray-200'>
+        <h2 className='inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top'><i className='mr-2 fas fa-spinner animate-spin' />404</h2>
+        <div className='inline-block text-left h-32 leading-10 items-center'>
+          <h2 className='m-0 p-0'>页面无法加载，即将返回首页</h2>
         </div>
-    </>
+      </div>
+    </div>
+  </>
 }
 
 /**
@@ -613,18 +614,18 @@ const LayoutDashboard = props => {
 }
 
 export {
-    Layout404,
-    LayoutArchive,
-    LayoutBase,
-    LayoutCategoryIndex,
-    LayoutDashboard,
-    LayoutIndex,
-    LayoutPostList,
-    LayoutSearch,
-    LayoutSignIn,
-    LayoutSignUp,
-    LayoutSlug,
-    LayoutTagIndex,
-    CONFIG as THEME_CONFIG
+  Layout404,
+  LayoutArchive,
+  LayoutBase,
+  LayoutCategoryIndex,
+  LayoutDashboard,
+  LayoutIndex,
+  LayoutPostList,
+  LayoutSearch,
+  LayoutSignIn,
+  LayoutSignUp,
+  LayoutSlug,
+  LayoutTagIndex,
+  CONFIG as THEME_CONFIG
 }
 

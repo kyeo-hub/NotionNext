@@ -1,10 +1,11 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useEffect, useState,useMemo } from 'react'
 import CONFIG from '../config'
 import BlogPostCard from './BlogPostCard'
 import NavPostItem from './NavPostItem'
+import { useSiteConfig } from '../useSiteConfig'
 
 /**
  * 博客列表滚动分页
@@ -17,19 +18,29 @@ const NavPostList = props => {
   const { filteredNavPages } = props
   const { locale, currentSearch } = useGlobal()
   const router = useRouter()
+  // const AUTO_SORT = siteConfig('GITBOOK_AUTO_SORT', true, CONFIG)
+  const [AUTO_SORT, GITBOOK_EXCLUSIVE_COLLAPSE, INDEX_PAGE, DESCRIPTION] = useSiteConfig([
+    ['GITBOOK_AUTO_SORT', true],
+    ['GITBOOK_EXCLUSIVE_COLLAPSE', null],
+    ['GITBOOK_INDEX_PAGE', ''],
+    ['DESCRIPTION', '']
+  ])
 
   // 按分类将文章分组成文件夹
-  const categoryFolders = groupArticles(filteredNavPages)
+  // const categoryFolders = groupArticles(filteredNavPages)
+  const categoryFolders = useMemo(() => {
+    return groupArticles(filteredNavPages, AUTO_SORT)
+  }, [filteredNavPages, AUTO_SORT])
 
   // 存放被展开的分组
   const [expandedGroups, setExpandedGroups] = useState([])
 
   // 是否排他折叠，一次只展开一个文件夹
-  const GITBOOK_EXCLUSIVE_COLLAPSE = siteConfig(
-    'GITBOOK_EXCLUSIVE_COLLAPSE',
-    null,
-    CONFIG
-  )
+  // const GITBOOK_EXCLUSIVE_COLLAPSE = siteConfig(
+  //   'GITBOOK_EXCLUSIVE_COLLAPSE',
+  //   null,
+  //   CONFIG
+  // )
 
   useEffect(() => {
     // 展开文件夹
@@ -83,11 +94,13 @@ const NavPostList = props => {
     )
   }
   // 如果href
-  const href = siteConfig('GITBOOK_INDEX_PAGE') + ''
+  // const href = siteConfig('GITBOOK_INDEX_PAGE') + ''
+  const href = INDEX_PAGE + ''
 
   const homePost = {
     id: '-1',
-    title: siteConfig('DESCRIPTION'),
+    // title: siteConfig('DESCRIPTION'),
+    title: DESCRIPTION,
     href: href.indexOf('/') !== 0 ? '/' + href : href
   }
 
@@ -113,12 +126,12 @@ const NavPostList = props => {
 }
 
 // 按照分类将文章分组成文件夹
-function groupArticles(filteredNavPages) {
+function groupArticles(filteredNavPages, AUTO_SORT) {
   if (!filteredNavPages) {
     return []
   }
   const groups = []
-  const AUTO_SORT = siteConfig('GITBOOK_AUTO_SORT', true, CONFIG)
+  
 
   for (let i = 0; i < filteredNavPages.length; i++) {
     const item = filteredNavPages[i]
