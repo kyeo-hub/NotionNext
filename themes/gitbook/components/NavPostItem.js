@@ -12,9 +12,10 @@ import BlogPostCard from './BlogPostCard'
  * @constructor
  */
 const NavPostItem = props => {
+  const [isTouchDevice, setIsTouchDevice] = useState(false)
   const { group, expanded, toggleItem } = props // 接收传递的展开状态和切换函数
   const hoverExpand = siteConfig('GITBOOK_FOLDER_HOVER_EXPAND')
-  const [isTouchDevice, setIsTouchDevice] = useState(false)
+
 
   // 检测是否为触摸设备
   useEffect(() => {
@@ -46,9 +47,10 @@ const NavPostItem = props => {
 
   const groupHasLatest = group?.items?.some(post => post.isLatest)
 
-  if (group?.category) {
-    return (
-      <>
+
+  return (
+    <>
+      {group?.category ? (<>
         <div
           onMouseEnter={onHoverToggle}
           onClick={toggleOpenSubMenu}
@@ -73,18 +75,18 @@ const NavPostItem = props => {
           ))}
         </Collapse>
       </>
-    )
-  } else {
-    return (
-      <>
-        {group?.items?.map((post, index) => (
-          <div key={index}>
-            <BlogPostCard className='text-md py-2' post={post} />
-          </div>
-        ))}
-      </>
-    )
-  }
+      ) : (
+        <>
+          {group?.items?.map((post, index) => (
+            <div key={index}>
+              <BlogPostCard className='text-md py-2' post={post} />
+            </div>
+          ))}
+        </>
+      )}
+    </>
+  )
+
 }
 
 export default NavPostItem
