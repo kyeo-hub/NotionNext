@@ -39,7 +39,7 @@ import RevolverMaps from './components/RevolverMaps'
 import TagItemMini from './components/TagItemMini'
 import CONFIG from './config'
 import { Style } from './style'
-// import FloatMenu from './components/FloatMenu'
+import FloatMenu from './components/FloatMenu'
 
 const AlgoliaSearchModal = dynamic(
   () => import('@/components/AlgoliaSearchModal'),
@@ -230,7 +230,7 @@ const LayoutBase = props => {
         </main>
 
         {GITBOOK_LOADING_COVER && <LoadingCover />}
-        {/* <FloatMenu /> */}
+        <FloatMenu />
         {/* 回顶按钮 */}
         <JumpToTopButton />
 

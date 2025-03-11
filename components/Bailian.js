@@ -99,9 +99,9 @@ export default function Bailian() {
         }
 
         const initChatbot = () => {
-            console.log('当前配置:', JSON.stringify(CHATBOT_CONFIG))
+            // console.log('当前配置:', JSON.stringify(CHATBOT_CONFIG))
             if (window) {
-                console.log('[百炼] Chatbot 版本:', window)
+                // console.log('[百炼] Chatbot 版本:', window)
                 try {
                     window.CHATBOT_CONFIG = CHATBOT_CONFIG
                     // 显式指定容器
