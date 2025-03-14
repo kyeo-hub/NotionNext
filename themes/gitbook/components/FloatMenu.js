@@ -6,6 +6,7 @@ export default function FloatMenu() {
     const toolbarRef = useRef(null);
 
     useEffect(() => {
+        let isVisible = false;
         const waitForBailian = () => {
             return new Promise((resolve) => {
                 const check = () => {
@@ -22,9 +23,40 @@ export default function FloatMenu() {
         // 正确实例化
         const initToolbar = async () => {
             await waitForBailian();
-            const container = document.getElementById('bailian-root');
+            const container = document.getElementById('webChat-dialog');
+            // 在初始化容器的代码后添加
+            const addCloseButton = () => {
+                const closeBtn = document.createElement('div');
+                closeBtn.innerHTML = '×';
+                closeBtn.style.cssText = `
+                    position: absolute;
+                    top: 5px;
+                    right: 15px;
+                    cursor: pointer;
+                    font-size: 24px;
+                    color: rgb(255, 255, 255);
+                `;
+                closeBtn.onclick = () => document.getElementById('webChat-dialog').style.display = 'none';
+
+                const container = document.getElementById('webChat-dialog');
+                if (container) container.appendChild(closeBtn);
+            }
             function showBailian() {
-                container.style.display = 'block'; // 显示容器
+                const container = document.getElementById('webChat-dialog');
+                if (container.style.display === 'block') {
+                    container.style.display = 'none'; // 关闭
+                } else {
+                    container.style.display = 'block'; // 打开
+                }
+                addCloseButton();
+            }
+            function toggleBailian() {
+                const container = document.getElementById('webChat-dialog');
+                isVisible = !isVisible;
+                container.style.display = isVisible ? 'block' : 'none';
+                
+                // 如果使用关闭按钮方案，保持这个状态同步
+                if (isVisible) addCloseButton();
             }
             const instance = new FloatToolbar({
                 position: { right: '30px' },
@@ -54,7 +86,7 @@ export default function FloatMenu() {
                         type: 'function',
                         text: 'AI客服',
                         icon: 'https://img.alicdn.com/imgextra/i2/O1CN01Pda9nq1YDV0mnZ31H_!!6000000003025-54-tps-120-120.apng',
-                        callback: () => showBailian()
+                        callback: () => toggleBailian()
                     }
                     // 其他配置项...
                 ]

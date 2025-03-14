@@ -22,7 +22,7 @@ export default function Bailian() {
         endpoint: BAILIAN_ENDPOINT,
         displayByDefault: false, // 默认不显示 AI 助手对话框
         title: title, // 自定义 AI 助手标题
-        draggable: false, // 是否开启拖拽
+        draggable: true, // 是否开启拖拽
         aiChatOptions: { // 自定义取值参考：https://docs.nlkit.com/nlux/reference/ui/ai-chat#conversation-options
             conversationOptions: { // 自定义取值参考：https://docs.nlkit.com/nlux/reference/ui/ai-chat#conversation-options
                 conversationStarters: [
@@ -72,40 +72,42 @@ export default function Bailian() {
         .webchat-container {
             z-index: 100;
             bottom: 10px;
-            right: 10px;
+            right: 150px !important;
         }
         .webchat-bubble-tip {
-            z-index: 99;
-            bottom: 20px;
-            right: 20px;
+            display: none !important;
         }
+        ._closeButton_z6174_83 {
+            display: none !important;
+            }
     `
         document.head.appendChild(styleTag)
         let retryCount = 0
         const maxRetries = 3
-        const containerId = 'bailian-root'
+        // const containerId = 'bailian-root'
 
         // 创建固定容器
-        const createContainer = () => {
-            if (!document.getElementById(containerId)) {
-                const div = document.createElement('div')
-                div.id = containerId
-                div.style.position = 'fixed'
-                div.style.bottom = '20px'
-                div.style.right = '20px'
-                div.style.zIndex = '9999'
-                document.body.appendChild(div)
-            }
-        }
+        // const createContainer = () => {
+        //     if (!document.getElementById(containerId)) {
+        //         const div = document.createElement('div')
+        //         div.id = containerId
+        //         div.style.position = 'fixed'
+        //         div.style.bottom = '20px'
+        //         div.style.right = '20px'
+        //         div.style.zIndex = '9999'
+        //         document.body.appendChild(div)
+        //     }
+        // }
 
         const initChatbot = () => {
             // console.log('当前配置:', JSON.stringify(CHATBOT_CONFIG))
             if (window) {
                 // console.log('[百炼] Chatbot 版本:', window)
                 try {
-                    window.CHATBOT_CONFIG = CHATBOT_CONFIG
-                    // 显式指定容器
-                    container: document.getElementById(containerId)
+                    window.CHATBOT_CONFIG = {
+                        ...CHATBOT_CONFIG,
+                        // container: document.getElementById(containerId)
+                      }
 
                 } catch (error) {
                     console.error('[百炼] 初始化失败:', error)
@@ -121,7 +123,7 @@ export default function Bailian() {
 
         const loadResources = async () => {
             try {
-                createContainer()
+                // createContainer()
 
                 // 方法一：使用原生加载方式
                 const link = document.createElement('link')
@@ -160,8 +162,8 @@ export default function Bailian() {
 
         return () => {
             styleTag?.remove() // 新增清理操作
-            const container = document.getElementById(containerId)
-            container?.remove()
+            // const container = document.getElementById(containerId)
+            // container?.remove()
             window.Chatbot?.destroy?.()
 
         }
