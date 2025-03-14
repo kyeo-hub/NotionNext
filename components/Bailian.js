@@ -22,7 +22,7 @@ export default function Bailian() {
         endpoint: BAILIAN_ENDPOINT,
         displayByDefault: false, // 默认不显示 AI 助手对话框
         title: title, // 自定义 AI 助手标题
-        draggable: true, // 是否开启拖拽
+        draggable: false, // 是否开启拖拽
         aiChatOptions: { // 自定义取值参考：https://docs.nlkit.com/nlux/reference/ui/ai-chat#conversation-options
             conversationOptions: { // 自定义取值参考：https://docs.nlkit.com/nlux/reference/ui/ai-chat#conversation-options
                 conversationStarters: [
@@ -135,6 +135,7 @@ export default function Bailian() {
                 script.onload = initChatbot
                 script.onerror = (e) => console.error('[百炼] JS加载失败:', e)
                 document.body.appendChild(script)
+                window.bailianLoaded = true;
 
                 // 方法二：保留现有加载方式（需改造loadExternalResource）
 
@@ -155,6 +156,7 @@ export default function Bailian() {
         if (BAILIAN_ENDPOINT) {
             loadResources()
         }
+        
 
         return () => {
             styleTag?.remove() // 新增清理操作

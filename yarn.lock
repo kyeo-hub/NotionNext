@@ -2089,6 +2089,11 @@ flatted@^3.2.9:
   resolved "https://registry.npmmirror.com/flatted/-/flatted-3.3.2.tgz#adba1448a9841bec72b42c532ea23dbbedef1a27"
   integrity sha512-AiwGJM8YcNOaobumgtng+6NHuOqC3A7MixFeDafM3X9cIUM+xUXoS5Vfgf+OihAYe20fxqNM9yPBXJzRtZ/4eA==
 
+float-toolbar@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.npmmirror.com/float-toolbar/-/float-toolbar-1.0.4.tgz#e48c9ee4248a8beae44e9dbfa060e92982022f6b"
+  integrity sha512-EQydSevbdqjcogir9Knt9G8pM9CaoV/oenKdndetSYuON7IJ7XF/EaEenNs++99pfAZZyS88ICkBJt9e7zNvwA==
+
 follow-redirects@^1.15.6:
   version "1.15.9"
   resolved "https://registry.npmmirror.com/follow-redirects/-/follow-redirects-1.15.9.tgz#a604fa10e443bf98ca94228d9eebcc2e8a2c8ee1"

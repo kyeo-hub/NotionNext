@@ -1,180 +1,77 @@
-import styles from './floatmenu.module.css'
+// FloatMenu.jsx
+import { useEffect, useRef } from 'react';
+import FloatToolbar from 'float-toolbar';
 
-export default function FloatMenu(props) {
-    return (
-        <div className={styles["nav-servic"]}>
-            <ul className={styles["nav-servic-li"]}> {/* 原 nav-servic-li */}
+export default function FloatMenu() {
+    const toolbarRef = useRef(null);
 
-                <li className={styles["nsl-li"]}> {/* 原 nsl-li */}
-                    <div className={styles["nsl-li-top"]}>
-                        <div className={`${styles["nsl-li-top-icon"]} ${styles["ys-imgbox-cover"]}`}>
-                            <img src="https://www.mrdvs.cn/static/picture/nav-icon.svg" alt="" />
-                            <img src="https://www.mrdvs.cn/static/picture/nav-iconh.svg" alt="" />
-                        </div>
-                        <p>售前咨询</p>
-                    </div>
-                    <div className={styles["nsl-li-btm"]}>
-                        <ul className={styles["nsl-li-btm-wrap"]}>
-                            <li className={styles["nlbw-li"]}>
-                                <div className={styles["nlbw-wrap"]}>
-                                    <div className={styles["nlbw-wrap-tit"]}>
-                                        <p>企业咨询</p>
-                                    </div>
-                                    <div className={styles["nlbw-wrap-info"]}>
-                                        <p>添加客服微信</p>
-                                    </div>
-                                    <div className={styles["nlbw-wrap-img"]}>
-                                        <img src="https://www.mrdvs.cn/uploadfile/202501/944d6e533155b09.jpg" alt="codes.png" />
-                                    </div>
-                                    <div className={styles["nlbw-wrap-sutit"]}>
-                                        <p>企业咨询</p>
-                                    </div>
-                                    <div className={styles["nlbw-wrap-btm"]}>
-                                        <img src="https://www.mrdvs.cn/static/picture/syflopi.svg" alt="" />
-                                        <p>400-025-6680</p>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+    useEffect(() => {
+        const waitForBailian = () => {
+            return new Promise((resolve) => {
+                const check = () => {
+                    if (window.bailianLoaded) {
+                        resolve();
+                    } else {
+                        setTimeout(check, 100); // 每 100ms 检查一次
+                    }
+                };
+                check();
+            });
+        };
 
-                <li className={styles["nsl-li"]}>
-                    <a href="https://work.weixin.qq.com/kfid/kfc1b4837e58e566f14" target="_blank" className={styles["nsl-li-top"]}>
-                        <div className={`${styles["nsl-li-top-icon"]} ${styles["ys-imgbox-cover"]}`}>
-                            <img src="https://www.mrdvs.cn/static/picture/nav-icon.svg" alt="" />
-                            <img src="https://www.mrdvs.cn/static/picture/nav-iconh.svg" alt="" />
-                        </div>
-                        <p>在线客服</p>
-                    </a>
-                </li>
+        // 正确实例化
+        const initToolbar = async () => {
+            await waitForBailian();
+            const container = document.getElementById('bailian-root');
+            function showBailian() {
+                container.style.display = 'block'; // 显示容器
+            }
+            const instance = new FloatToolbar({
+                position: { right: '30px' },
+                theme: 'light',
+                breakpoint: 768,
+                toggleIcon: 'https://www.mrdvs.cn/static/picture/navar.svg',
+                items: [
+                    {
+                        type: 'popup',
+                        text: '售前咨询',
+                        icon: 'https://www.mrdvs.cn/static/picture/nav-iconh.svg',
+                        popup: {
+                            title: '企业咨询',
+                            description: '添加客服微信',
+                            qrCode: 'https://www.mrdvs.cn/uploadfile/202501/944d6e533155b09.jpg',
+                            phone: '400-025-6680',
+                            phoneIcon: 'https://www.mrdvs.cn/static/picture/syflopi.svg',
+                        }
+                    },
+                    {
+                        type: 'link',
+                        text: '在线客服',
+                        icon: 'https://www.mrdvs.cn/static/picture/nav-icon2h.svg',
+                        link: 'https://work.weixin.qq.com/kfid/kfc1b4837e58e566f14'
+                    },
+                    {
+                        type: 'function',
+                        text: 'AI客服',
+                        icon: 'https://img.alicdn.com/imgextra/i2/O1CN01Pda9nq1YDV0mnZ31H_!!6000000003025-54-tps-120-120.apng',
+                        callback: () => showBailian()
+                    }
+                    // 其他配置项...
+                ]
+            });
 
-                <li className={styles["nsl-li"]}>
-                    <div className={styles["nsl-li-top"]}>
-                        <div className={`${styles["nsl-li-top-icon"]} ${styles["ys-imgbox-cover"]}`}>
-                            <img src="https://www.mrdvs.cn/static/picture/nav-icon.svg" alt="" />
-                            <img src="https://www.mrdvs.cn/static/picture/nav-iconh.svg" alt="" />
-                        </div>
-                        <p>扫码咨询</p>
-                    </div>
-                    <div className={styles["nsl-li-btm"]}>
-                        <ul className={styles["nsl-li-btm-wrap"]}>
-                            <li className={styles["nlbw-li"]}>
-                                <div className={styles["nlbw-wrap"]}>
-                                    <div className={styles["nlbw-wrap-tit"]}>
-                                        <p>企业咨询</p>
-                                    </div>
-                                    <div className={styles["nlbw-wrap-info"]}>
-                                        <p>微信扫码咨询客服</p>
-                                    </div>
-                                    <div className={styles["nlbw-wrap-img"]}>
-                                        <img src="https://www.mrdvs.cn/uploadfile/202501/944d6e533155b09.jpg" alt="codes.png" />
-                                    </div>
-                                    <div className={styles["nlbw-wrap-sutit"]}>
-                                        <p>服务热线</p>
-                                    </div>
-                                    <div className={styles["nlbw-wrap-btm"]}>
-                                        <img src="https://www.mrdvs.cn/static/picture/syflopi.svg" alt="" />
-                                        <p>400-025-6680</p>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+            // 保存实例引用
+            toolbarRef.current = instance;
 
-                <li className={`${styles["nsl-li"]} `} style={{ display: 'none' }}>
-                    <div className={styles["nsl-li-top"]}>
-                        <div className={`${styles["nsl-li-top-icon"]} ${styles["ys-imgbox-cover"]}`}>
-                            <img src="https://www.mrdvs.cn/static/picture/nav-icon2.svg" alt="" />
-                            <img src="https://www.mrdvs.cn/static/picture/nav-icon2h.svg" alt="" />
-                        </div>
-                        <p>在线客服</p>
-                    </div>
-                    <div className={styles["nsl-li-btm"]}>
-                        <ul className={styles["nsl-li-btm-wrap"]}>
-                            <li className={styles["nlbw-li"]}>
-                                <div className={styles["nlbw-wrap"]}>
-                                    <div className={styles["nlbw-wrap-tit"]}>
-                                        <p>
-                                            <a href="https://work.weixin.qq.com/kfid/kfc1b4837e58e566f14" target="_blank">
-                                                点击打开-电脑端微信客服
-                                            </a>
-                                        </p>
-                                    </div>
-                                    <div className={styles["nlbw-wrap-info"]}>
-                                        <p>微信扫码咨询在线客服</p>
-                                    </div>
-                                    <div className={styles["nlbw-wrap-img"]}>
-                                        <img src="/uploadfile/202409/b50610b5a56c1f4.jpg" alt="人事服务.jpg" />
-                                    </div>
-                                    <div className={styles["nlbw-wrap-sutit"]}>
-                                        <p>服务热线</p>
-                                    </div>
-                                    <div className={styles["nlbw-wrap-btm"]}>
-                                        <img src="https://www.mrdvs.cn/static/picture/syflopi.svg" alt="" />
-                                        <p>400-025-6680</p>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+            // 清理函数
+            return () => {
+                if (toolbarRef.current) {
+                    toolbarRef.current.destroy();
+                }
+            };
+        }
+        initToolbar();
+    }, []); // 空依赖数组表示只运行一次
 
-                <li className={`${styles["nsl-li"]} `} style={{ display: 'none' }}>
-                    <div className={styles["nsl-li-top"]}>
-                        <div className={`${styles["nsl-li-top-icon"]} ${styles["ys-imgbox-cover"]}`}>
-                            <img src="https://www.mrdvs.cn/static/picture/nav-icon2.svg" alt="" />
-                            <img src="https://www.mrdvs.cn/static/picture/nav-icon2h.svg" alt="" />
-                        </div>
-                        <p>个人服务</p>
-                    </div>
-                    <div className={styles["nsl-li-btm"]}>
-                        <ul className={styles["nsl-li-btm-wrap"]}>
-                            <li className={styles["nlbw-li"]}>
-                                <div className={styles["nlbw-wrap"]}>
-                                    <div className={styles["nlbw-wrap-tit"]}>
-                                        <p>人事服务</p>
-                                    </div>
-                                    <div className={styles["nlbw-wrap-info"]}>
-                                        <p>扫码关注“迈尔微视"</p>
-                                    </div>
-                                    <div className={styles["nlbw-wrap-img"]}>
-                                        <img src="https://www.mrdvs.cn/uploadfile/202409/b50610b5a56c1f4.jpg" alt="人事服务.jpg" />
-                                    </div>
-                                    <div className={styles["nlbw-wrap-sutit"]}>
-                                        <p>服务热线</p>
-                                    </div>
-                                    <div className={styles["nlbw-wrap-btm"]}>
-                                        <img src="https://www.mrdvs.cn/static/picture/syflopi.svg" alt="" />
-                                        <p>400-025-6680</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li className={styles["nlbw-li"]}>
-                                <div className={styles["nlbw-wrap"]}>
-                                    <div className={styles["nlbw-wrap-tit"]}>
-                                        <p>健康福利</p>
-                                    </div>
-                                    <div className={styles["nlbw-wrap-info"]}>
-                                        <p>扫码关注“迈尔微视"</p>
-                                    </div>
-                                    <div className={styles["nlbw-wrap-img"]}>
-                                        <img src="https://www.mrdvs.cn/uploadfile/202409/b50610b5a56c1f4.jpg" alt="迈尔微视.jpg" />
-                                    </div>
-                                    <div className={styles["nlbw-wrap-sutit"]}>
-                                        <p>服务热线</p>
-                                    </div>
-                                    <div className={styles["nlbw-wrap-btm"]}>
-                                        <img src="https://www.mrdvs.cn/static/picture/syflopi.svg" alt="" />
-                                        <p>400-025-6680</p>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    )
+    return null; // 不需要渲染 DOM 元素
 }
