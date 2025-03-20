@@ -17,23 +17,6 @@ export const MenuItemDrop = ({ link }) => {
     timeoutId = setTimeout(() => changeShow(false), 150); // 150ms 延迟
   };
 
-  // const newStyleProps = {
-  //   padding: '6px 3.5px',
-  //   borderRadius: '100px',
-  //   backgroundColor: 'rgba(255,255,255,0.1)',
-  //   boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
-  //   border: '1px solid #e3e8f7',
-  //   transition: '0.3s',
-  //   top: '35px',
-  //   position: 'absolute',
-  //   marginTop: '8px',
-  //   whiteSpace: 'nowrap',
-  //   opacity: show ? 1 : 0, // 2. 动态控制透明度替代原opacity切换
-  //   transform: show
-  //     ? 'translateY(0) scale(1)'
-  //     : 'translateY(-10px) scale(0.8)'
-  // }
-
   if (!link || !link.show) {
     return null
   }
