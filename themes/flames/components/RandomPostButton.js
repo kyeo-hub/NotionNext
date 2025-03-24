@@ -19,7 +19,7 @@ export default function RandomPostButton(props) {
   }
 
   return (
-        <div title={locale.MENU.WALK_AROUND} className='cursor-pointer hover:bg-black hover:bg-opacity-10 rounded-full w-10 h-10 flex justify-center items-center duration-200 transition-all' onClick={handleClick}>
+        <div data-tip="随机跳转文章" title={locale.MENU.WALK_AROUND} className='cursor-pointer hover:bg-black hover:bg-opacity-10 rounded-full w-10 h-10 flex justify-center items-center duration-200 transition-all' onClick={handleClick}>
             <i className="fa-solid fa-podcast"></i>
         </div>
   )

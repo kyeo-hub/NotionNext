@@ -184,6 +184,7 @@ const ExternalPlugin = props => {
     <>
       {/* 全局样式嵌入 */}
       <GlobalStyle />
+      <Tip />
       {MOUSE_FOLLOW && <MouseFollow />}
       {THEME_SWITCH && <ThemeSwitch />}
       {DEBUG && <DebugPanel />}
@@ -504,6 +505,9 @@ const LA51 = dynamic(() => import('@/components/LA51'), {
   ssr: false
 })
 const TianliGPT = dynamic(() => import('@/components/TianliGPT'), {
+  ssr: false
+})
+const Tip = dynamic(() => import('@/components/Tip'), {
   ssr: false
 })
 

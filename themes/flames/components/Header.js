@@ -157,6 +157,7 @@ const Header = props => {
               <MenuListTop {...props} />
             </div>
             <div
+              data-tip={'返回顶部'}
               className={`cursor-pointer absolute transition-all duration-700 ${activeIndex === 1 ? 'opacity-100 mb-0' : '-mb-20 opacity-0 invisible'}`}
               title={'返回顶部'}
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
