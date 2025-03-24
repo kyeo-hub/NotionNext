@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>悬浮工具栏测试</title>
+  </head>
+  <body>
+    <h1>滚动测试区域</h1>
+    <div style="height: 200vh"></div>
+
+    <script src="https://unpkg.com/float-toolbar@1.0.4/dist/float-toolbar.umd.js">
+    </script>
+    <script>
+      // 初始化示例
+      new FloatToolbar.default({
+        items: [
+          {
+            type: 'popup',
+            icon: 'https://tupian.kyeo.top/nav-iconh.svg',
+            text: '售前咨询',
+            popup: {
+              title: '企业咨询',
+              description: '添加客服微信',
+              qrCode: 'https://tupian.kyeo.top/kefu.png',
+              phone: '400-025-6680',
+              phoneIcon: 'https://tupian.kyeo.top/phone-default.svg',
+            },
+          },
+          {
+            type: 'function',
+            icon: 'https://tupian.kyeo.top/nav-iconh.svg',
+            text: '点击执行',
+            callback: () => alert('自定义函数触发！')
+          },
+          {
+            type: 'link',
+            icon: 'https://tupian.kyeo.top/nav-icon.svg',
+            text: '在线客服',
+            link: 'https://work.weixin.qq.com/kfid/kfcf71bcb4fef9bfbc2',
+          },
+        ],
+        position: { right: '30px' },
+        theme: 'light',
+        breakpoint: 768,
+        toggleIcon: 'https://tupian.kyeo.top/navar.svg'
+      });
+    </script>
+  </body>
+</html>

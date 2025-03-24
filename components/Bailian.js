@@ -26,9 +26,9 @@ export default function Bailian() {
         aiChatOptions: { // 自定义取值参考：https://docs.nlkit.com/nlux/reference/ui/ai-chat#conversation-options
             conversationOptions: { // 自定义取值参考：https://docs.nlkit.com/nlux/reference/ui/ai-chat#conversation-options
                 conversationStarters: [
-                    { prompt: '哪款手机续航最长？' },
-                    { prompt: '你们有哪些手机型号？' },
-                    { prompt: '有折叠屏手机吗?' },
+                    { prompt: '推荐一款性价比高的3D避障产品？' },
+                    { prompt: '介绍一下视觉SLAM定位导航？' },
+                    { prompt: '介绍一下托盘/栈板识别方案？' },
                 ]
             },
             displayOptions: { // 自定义取值参考：https://docs.nlkit.com/nlux/reference/ui/ai-chat#display-options
