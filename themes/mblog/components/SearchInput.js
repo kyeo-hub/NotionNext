@@ -1,17 +1,16 @@
-import { siteConfig } from '@/lib/config'
-import { deepClone } from '@/lib/utils'
-import { useGitBookGlobal } from '@/themes/gitbook'
+import { useGlobal } from '@/lib/global'
+import { useRouter } from 'next/router'
 import { useImperativeHandle, useRef, useState } from 'react'
-import { useHotkeys } from 'react-hotkeys-hook'
-let lock = false
+import { useFukasawaGlobal } from '@/themes/mblog'
+import { siteConfig } from '@/lib/config'
 
-/**
- * 搜索栏
- */
-const SearchInput = ({ currentSearch, cRef, className }) => {
+const SearchInput = (props) => {
+  const { keyword, cRef } = props
+  const { searchModal } = useFukasawaGlobal()
+  const [onLoading, setLoadingState] = useState(false)
+  const { locale } = useGlobal()
+  const router = useRouter()
   const searchInputRef = useRef()
-  const { searchModal, setFilteredNavPages, allNavPages } = useGitBookGlobal()
-
   useImperativeHandle(cRef, () => {
     return {
       focus: () => {
@@ -21,139 +20,76 @@ const SearchInput = ({ currentSearch, cRef, className }) => {
   })
 
   /**
-   * 快捷键设置
+   * 搜索
    */
-  useHotkeys('ctrl+k', e => {
-    searchInputRef?.current?.focus()
-    e.preventDefault()
-    handleSearch()
-  })
-
   const handleSearch = () => {
-    // 使用Algolia
     if (siteConfig('ALGOLIA_APP_ID')) {
       searchModal?.current?.openSearch()
     }
-    let keyword = searchInputRef.current.value
-    if (keyword) {
-      keyword = keyword.trim()
+    const key = searchInputRef.current.value
+    if (key && key !== '') {
+      setLoadingState(true)
+      router.push({ pathname: '/search/' + key }).then(r => {
+        setLoadingState(false)
+      })
+      // location.href = '/search/' + key
     } else {
-      setFilteredNavPages(allNavPages)
-      return
+      router.push({ pathname: '/' }).then(r => {
+      })
     }
-    const filterAllNavPages = deepClone(allNavPages)
-
-    for (let i = filterAllNavPages.length - 1; i >= 0; i--) {
-      const post = filterAllNavPages[i]
-      const articleInfo = post.title + ''
-      const hit = articleInfo.toLowerCase().indexOf(keyword.toLowerCase()) > -1
-      if (!hit) {
-        // 删除
-        filterAllNavPages.splice(i, 1)
-      }
-    }
-
-    // 更新完
-    setFilteredNavPages(filterAllNavPages)
   }
 
   /**
-   * 回车键
+   * 监听事件
    * @param {*} e
    */
-  const handleKeyUp = e => {
-    // 使用Algolia
+  const handleKeyUp = (e) => {
     if (siteConfig('ALGOLIA_APP_ID')) {
       searchModal?.current?.openSearch()
       return
     }
-
-    if (e.keyCode === 13) {
-      // 回车
+    if (e.keyCode === 13) { // 回车
       handleSearch(searchInputRef.current.value)
-    } else if (e.keyCode === 27) {
-      // ESC
+    } else if (e.keyCode === 27) { // ESC
       cleanSearch()
     }
   }
-
   const handleFocus = () => {
     // 使用Algolia
     if (siteConfig('ALGOLIA_APP_ID')) {
       searchModal?.current?.openSearch()
     }
   }
-
   /**
-   * 清理搜索
+   * 清理索引
    */
   const cleanSearch = () => {
     searchInputRef.current.value = ''
-    handleSearch()
-    setShowClean(false)
   }
 
-  const [showClean, setShowClean] = useState(false)
-  const updateSearchKey = val => {
-    if (lock) {
-      return
-    }
-    searchInputRef.current.value = val
-    if (val) {
-      setShowClean(true)
-    } else {
-      setShowClean(false)
-    }
-  }
+  return <div className='flex w-full bg-gray-100'>
+    <input
+      ref={searchInputRef}
+      type='text'
+      placeholder={locale.SEARCH.ARTICLES}
+      aria-label="Search"
+      className={'outline-none w-full text-sm pl-2 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-gray-800 dark:text-white'}
+      onKeyUp={handleKeyUp}
+      onFocus={handleFocus}
+      defaultValue={keyword || ''}
+    />
 
-  function lockSearchInput() {
-    lock = true
-  }
-
-  function unLockSearchInput() {
-    lock = false
-  }
-
-  return (
-    <div className={`${className} relative`}>
-      <div
-        className='absolute left-0 ml-4 items-center justify-center py-2'
-        onClick={handleSearch}>
-        <i
-          className={
-            'hover:text-black transform duration-200 text-gray-500  dark:hover:text-gray-300 cursor-pointer fas fa-search'
-          }
-        />
-      </div>
-      <input
-        ref={searchInputRef}
-        type='text'
-        className={`rounded-lg border dark:border-black pl-12 leading-10 placeholder-gray-500 outline-none w-full transition focus:shadow-lg text-black bg-gray-100 dark:bg-black dark:text-white`}
-        onFocus={handleFocus}
-        onKeyUp={handleKeyUp}
-        placeholder='Search'
-        onCompositionStart={lockSearchInput}
-        onCompositionUpdate={lockSearchInput}
-        onCompositionEnd={unLockSearchInput}
-        onChange={e => updateSearchKey(e.target.value)}
-        defaultValue={currentSearch}
-      />
-      <div
-        className='absolute right-0 mr-4 items-center justify-center py-2 text-gray-400 dark:text-gray-600'
-        onClick={handleSearch}>
-        Ctrl+K
-      </div>
-
-      {showClean && (
-        <div className='-ml-12 cursor-pointer flex float-right items-center justify-center py-2'>
-          <i
-            className='fas fa-times hover:text-black transform duration-200 text-gray-400 cursor-pointer   dark:hover:text-gray-300'
-            onClick={cleanSearch}
-          />
-        </div>
-      )}
+    <div className='-ml-8 cursor-pointer float-right items-center justify-center py-2'
+      onClick={handleSearch}>
+      <i className={`hover:text-black transform duration-200  text-gray-500 cursor-pointer fas ${onLoading ? 'fa-spinner animate-spin' : 'fa-search'}`} />
     </div>
-  )
+
+    {(keyword && keyword.length &&
+      <div className='-ml-12 cursor-pointer flex float-right items-center justify-center py-2'>
+        <i className='hover:text-black transform duration-200 text-gray-400 cursor-pointer fas fa-times' onClick={cleanSearch} />
+      </div>
+    )}
+  </div>
 }
 
 export default SearchInput
