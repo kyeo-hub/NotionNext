@@ -35,7 +35,7 @@ export default function MailChimpForm() {
   }, [subscribeToNewsletter])
 
   return <>
-        {siteConfig('FUKASAWA_MAILCHIMP_FORM', null, CONFIG) && <div className="sm:col-span-6 md:col-span-3 lg:col-span-3">
+        {siteConfig('MBLOG_MAILCHIMP_FORM', null, CONFIG) && <div className="sm:col-span-6 md:col-span-3 lg:col-span-3">
             <h6 className="text-gray-800 font-medium mb-2">{locale.MAILCHIMP.SUBSCRIBE}</h6>
             <p className="text-sm text-gray-600 mb-4">{locale.MAILCHIMP.MSG}</p>
             <form ref={formRef}>

@@ -17,17 +17,17 @@ export const MenuList = props => {
     {
       name: locale.COMMON.CATEGORY,
       href: '/category',
-      show: siteConfig('FUKASAWA_MENU_CATEGORY', null, CONFIG)
+      show: siteConfig('MBLOG_MENU_CATEGORY', null, CONFIG)
     },
     {
       name: locale.COMMON.TAGS,
       href: '/tag',
-      show: siteConfig('FUKASAWA_MENU_TAG', null, CONFIG)
+      show: siteConfig('MBLOG_MENU_TAG', null, CONFIG)
     },
     {
       name: locale.NAV.ARCHIVE,
       href: '/archive',
-      show: siteConfig('FUKASAWA_MENU_ARCHIVE', null, CONFIG)
+      show: siteConfig('MBLOG_MENU_ARCHIVE', null, CONFIG)
     }
   ]
 

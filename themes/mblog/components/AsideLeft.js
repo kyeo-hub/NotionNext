@@ -28,18 +28,18 @@ function AsideLeft(props) {
   const router = useRouter()
   const { fullWidth } = useGlobal()
 
-  const FUKASAWA_SIDEBAR_COLLAPSE_SATUS_DEFAULT =
+  const MBLOG_SIDEBAR_COLLAPSE_SATUS_DEFAULT =
     fullWidth ||
-    siteConfig('FUKASAWA_SIDEBAR_COLLAPSE_SATUS_DEFAULT', null, CONFIG)
+    siteConfig('MBLOG_SIDEBAR_COLLAPSE_SATUS_DEFAULT', null, CONFIG)
 
-  const FUKASAWA_SIDEBAR_COLLAPSE_ON_SCROLL = siteConfig(
-    'FUKASAWA_SIDEBAR_COLLAPSE_ON_SCROLL',
+  const MBLOG_SIDEBAR_COLLAPSE_ON_SCROLL = siteConfig(
+    'MBLOG_SIDEBAR_COLLAPSE_ON_SCROLL',
     false,
     CONFIG
   )
 
-  const FUKASAWA_SIDEBAR_COLLAPSE_BUTTON = siteConfig(
-    'FUKASAWA_SIDEBAR_COLLAPSE_BUTTON',
+  const MBLOG_SIDEBAR_COLLAPSE_BUTTON = siteConfig(
+    'MBLOG_SIDEBAR_COLLAPSE_BUTTON',
     null,
     CONFIG
   )
@@ -49,10 +49,10 @@ function AsideLeft(props) {
     if (typeof window !== 'undefined') {
       return (
         localStorage.getItem('fukasawa-sidebar-collapse') === 'true' ||
-        FUKASAWA_SIDEBAR_COLLAPSE_SATUS_DEFAULT
+        MBLOG_SIDEBAR_COLLAPSE_SATUS_DEFAULT
       )
     }
-    return FUKASAWA_SIDEBAR_COLLAPSE_SATUS_DEFAULT
+    return MBLOG_SIDEBAR_COLLAPSE_SATUS_DEFAULT
   })
 
   // 在组件卸载时保存 open 状态到本地存储中
@@ -86,7 +86,7 @@ function AsideLeft(props) {
 
   // 自动折叠侧边栏 onResize 窗口宽度小于1366 || 滚动条滚动至页面的300px时 ; 将open设置为false
   useEffect(() => {
-    if (!FUKASAWA_SIDEBAR_COLLAPSE_ON_SCROLL) {
+    if (!MBLOG_SIDEBAR_COLLAPSE_ON_SCROLL) {
       return
     }
     const handleResize = debounce(() => {
@@ -114,7 +114,7 @@ function AsideLeft(props) {
     <div
       className={`sideLeft relative ${isCollapsed ? 'w-0' : 'w-80'} duration-300 transition-all bg-white dark:bg-hexo-black-gray hidden lg:block z-20`}>
       {/* 悬浮的折叠按钮 */}
-      {FUKASAWA_SIDEBAR_COLLAPSE_BUTTON && (
+      {MBLOG_SIDEBAR_COLLAPSE_BUTTON && (
         <div
           className={`${position} hidden lg:block fixed top-16 cursor-pointer hover:scale-110 duration-300 px-3 py-2 dark:text-white`}
           onClick={toggleOpen}>
@@ -126,7 +126,7 @@ function AsideLeft(props) {
         </div>
       )}
 
-      <div className={`h-full ${isCollapsed ? 'hidden' : 'p-16'}`}>
+      <div className={`h-full ${isCollapsed ? 'hidden' : 'p-8'}`}>
 
         <section className='siteInfo flex flex-col dark:text-gray-300 pt-8'>
           {siteConfig('DESCRIPTION')}
@@ -135,7 +135,6 @@ function AsideLeft(props) {
 
 
         <section className='flex flex-col dark:text-gray-300'>
-          <div className='w-12 my-4' />
           <Announcement post={notice} />
         </section>
 

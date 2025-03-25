@@ -26,25 +26,25 @@ export default function Header(props) {
       icon: 'fas fa-th',
       name: locale.COMMON.CATEGORY,
       href: '/category',
-      show: siteConfig('GITBOOK_MENU_CATEGORY', null, CONFIG)
+      show: siteConfig('MBLOG_MENU_CATEGORY', null, CONFIG)
     },
     {
       icon: 'fas fa-tag',
       name: locale.COMMON.TAGS,
       href: '/tag',
-      show: siteConfig('GITBOOK_BOOK_MENU_TAG', null, CONFIG)
+      show: siteConfig('MBLOG_BOOK_MENU_TAG', null, CONFIG)
     },
     {
       icon: 'fas fa-archive',
       name: locale.NAV.ARCHIVE,
       href: '/archive',
-      show: siteConfig('GITBOOK_MENU_ARCHIVE', null, CONFIG)
+      show: siteConfig('MBLOG_MENU_ARCHIVE', null, CONFIG)
     },
     {
       icon: 'fas fa-search',
       name: locale.NAV.SEARCH,
       href: '/search',
-      show: siteConfig('GITBOOK_MENU_SEARCH', null, CONFIG)
+      show: siteConfig('MBLOG_MENU_SEARCH', null, CONFIG)
     }
   ]
 

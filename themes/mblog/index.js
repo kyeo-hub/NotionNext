@@ -1,7 +1,6 @@
 'use client'
 
 import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
-import { AdSlot } from '@/components/GoogleAdsense'
 import replaceSearchResult from '@/components/Mark'
 import WWAds from '@/components/WWAds'
 import { siteConfig } from '@/lib/config'
@@ -22,6 +21,8 @@ import Header from './components/Header'
 import TagItemMini from './components/TagItemMini'
 import CONFIG from './config'
 import { Style } from './style'
+import FloatMenu from './components/FloatMenu'
+
 
 const Live2D = dynamic(() => import('@/components/Live2D'))
 
@@ -68,7 +69,7 @@ const LayoutBase = props => {
 
           <main
             id='wrapper'
-            className='relative flex w-full py-8 justify-center bg-day dark:bg-night'>
+            className='relative flex w-full pt-24 pb-8 justify-center bg-day dark:bg-night'>
             <div
               id='container-inner'
               className={`${fullWidth ? '' : '2xl:max-w-6xl md:max-w-4xl'} w-full relative z-10`}>
@@ -87,14 +88,12 @@ const LayoutBase = props => {
                 <div> {children} </div>
               </Transition>
 
-              <div className='mt-2'>
-                <AdSlot type='native' />
-              </div>
             </div>
           </main>
         </div>
 
         <AlgoliaSearchModal cRef={searchModal} {...props} />
+        <FloatMenu />
       </div>
     </ThemeGlobalFukasawa.Provider>
   )

@@ -1,7 +1,6 @@
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
-import CONFIG from '../config'
 
 /**
  * Logo区域
@@ -13,7 +12,7 @@ export default function LogoBar(props) {
   return (
     <div id='logo-wrapper' className='w-full flex items-center mr-2'>
       <Link
-        href={`/${siteConfig('GITBOOK_INDEX_PAGE', '', CONFIG)}`}
+        href='/'
         className='flex text-lg font-bold md:text-2xl dark:text-gray-200'>
         <LazyImage
           src={siteInfo?.icon}
