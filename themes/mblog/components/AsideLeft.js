@@ -132,12 +132,6 @@ function AsideLeft(props) {
           {siteConfig('DESCRIPTION')}
         </section>
 
-
-
-        <section className='flex flex-col dark:text-gray-300'>
-          <Announcement post={notice} />
-        </section>
-
         {router.asPath !== '/tag' && (
           <section className='flex flex-col'>
             <div className='w-12 my-4' />
@@ -154,6 +148,11 @@ function AsideLeft(props) {
             />
           </section>
         )}
+
+        <section className='flex flex-col dark:text-gray-300'>
+          <Announcement post={notice} />
+        </section>
+        
         <section className='sticky top-16 pt-12  flex flex-col max-h-screen '>
           <Catalog toc={post?.toc} />
           <div className='flex justify-center'>

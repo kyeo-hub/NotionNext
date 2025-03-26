@@ -50,7 +50,7 @@ const BlogCard = ({ showAnimate, post, showSummary }) => {
         maxHeight: '60rem',
         position: 'relative' // 为绝对定位标题做准备
       }}
-      className="w-full lg:max-w-sm p-3 shadow mb-4 mx-2 bg-white dark:bg-hexo-black-gray hover:shadow-lg duration-200 group">
+      className="w-full lg:max-w-sm p-3 shadow mb-4 mx-2 bg-white dark:bg-hexo-black-gray hover:shadow-lg transition-all duration-200 group">
 
       {/* 背景图容器 */}
       {showPageCover && (
