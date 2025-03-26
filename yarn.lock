@@ -2763,10 +2763,10 @@ keyv@^4.0.0, keyv@^4.5.3:
   dependencies:
     json-buffer "3.0.1"
 
-kyeo-tip@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.npmmirror.com/kyeo-tip/-/kyeo-tip-1.0.5.tgz#51cf6074955ccf54010648dcd2c49a422fbdb005"
-  integrity sha512-959B3R4rgKQHd/+bA4D+CVU5fqyfEA5zDaVA8TLqWVvi1OhCxgebNF6d79wPIYbpaCtg/fLXmm21MAga1tVVPw==
+kyeo-tip@^1.0.6:
+  version "1.0.7"
+  resolved "https://registry.npmmirror.com/kyeo-tip/-/kyeo-tip-1.0.7.tgz#38d7f7e3116386f8b7701edc4a0ab998d0c7cb02"
+  integrity sha512-aprr0Wh1w18bTOm7cjZBEB1CVDc97wf1JRNpa8ccCDWx1Ok9cE2ADxnJQ1eViq6z2jmRTlzkQpIgjqt1bbgNsA==
 
 language-subtag-registry@^0.3.20:
   version "0.3.23"
