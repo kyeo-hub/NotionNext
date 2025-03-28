@@ -8,16 +8,15 @@ const MenuItem = ({ href, title, target, rel, iconSrc, alt, text }) => {
       title={title}
       target={target}
       rel={rel}
-      className="flex items-center mx-2 my-1 p-2 !important rounded-lg flex-wrap gap-2 w-[150px] hover:bg-indigo-600"
-    >
+      className="flex items-center mx-2 my-1 p-2 !important rounded-lg flex-wrap gap-2 w-[150px] hover:bg-indigo-600 text-black font-bold hover:text-white">
       <Image
         src={iconSrc}
         alt={alt}
         width={24}
         height={24}
-        className="back-menu-item-icon entered loading"
+        className="w-6 h-6 rounded-lg bg-transparent entered loading"
       />
-      <span className="back-menu-item-text">{text}</span>
+      <span>{text}</span>
     </Link>
   );
 };
