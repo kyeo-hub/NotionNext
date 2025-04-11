@@ -43,6 +43,7 @@ import SideRight from './components/SideRight'
 import CONFIG from './config'
 import { Style } from './style'
 import AISummary from '@/components/AISummary'
+import UnderwaterBackground from './components/UnderwaterBackground'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -95,6 +96,8 @@ const LayoutBase = props => {
     <div
       id='theme-heo'
       className={`${siteConfig('FONT_STYLE')} bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col scroll-smooth`}>
+      {/* 水下背景 - 设置为z-index: -1，确保它在内容后面 */}
+      <UnderwaterBackground zIndex={-1} />
       <Style />
 
       {/* 顶部嵌入 导航栏，首页放hero，文章页放文章详情 */}
@@ -104,6 +107,7 @@ const LayoutBase = props => {
       <main
         id='wrapper-outer'
         className={`flex-grow w-full ${maxWidth} mx-auto relative md:px-5`}>
+
         <div
           id='container-inner'
           className={`${HEO_HERO_BODY_REVERSE ? 'flex-row-reverse' : ''} w-full mx-auto lg:flex justify-center relative z-10`}>
@@ -123,7 +127,10 @@ const LayoutBase = props => {
       </main>
 
       {/* 页脚 */}
-      <Footer />
+      <div className={`flex-grow w-full ${maxWidth} mx-auto relative md:px-5 mt-4`}>
+        <Footer />
+      </div>
+
 
       {HEO_LOADING_COVER && <LoadingCover />}
     </div>
@@ -307,7 +314,7 @@ const LayoutSlug = props => {
               <section
                 className='wow fadeInUp p-5 justify-center mx-auto'
                 data-wow-delay='.2s'>
-                <AISummary aiSummary={post.aiSummary}/>
+                <AISummary aiSummary={post.aiSummary} />
                 <WWAds orientation='horizontal' className='w-full' />
                 {post && <NotionPage post={post} />}
                 <WWAds orientation='horizontal' className='w-full' />
