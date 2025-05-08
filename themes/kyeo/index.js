@@ -15,7 +15,6 @@ import BlogListArchive from './components/BlogListArchive'
 import { BlogListPage } from './components/BlogListPage'
 import { BlogListScroll } from './components/BlogListScroll'
 import { PostLock } from './components/PostLock'
-import { PostMeta } from './components/PostMeta'
 import SearchInput from './components/SearchInput'
 import { SideBar } from './components/SideBar'
 import TitleBar from './components/TitleBar'
@@ -60,14 +59,17 @@ const LayoutBase = props => {
             <div
               className={`${LAYOUT_VERTICAL
                 ? 'flex space-x-0 md:space-x-2 md:flex-row flex-col w-full max-w-5xl justify-center xl:px-14 lg:px-4'
-                : 'md:w-64 sticky top-8'
+                : 'lg:w-96 md:w-80 w-full fixed top-0 left-0 h-screen overflow-y-auto z-20 bg-black dark:bg-white text-white dark:text-black'
                 }`}>
-              <SideBar {...props} />
+              <div className='flex justify-center'>
+                <SideBar {...props} />
+              </div>
+
             </div>
           )}
           {/* 内容 */}
           <div
-            className={`${fullWidth ? '' : LAYOUT_VERTICAL ? 'max-w-5xl' : 'max-w-3xl'} w-full xl:px-14 lg:px-4`}>
+            className={`${fullWidth ? '' : LAYOUT_VERTICAL ? 'max-w-5xl' : 'md:ml-80 lg:ml-96 flex-1 min-w-0'} w-full xl:px-14 lg:px-4`}>
             <Transition
               show={!onLoading}
               appear={true}
@@ -88,7 +90,7 @@ const LayoutBase = props => {
         </div>
       </div>
 
-      
+
 
       {/* 回顶按钮 */}
       <div className='fixed right-4 bottom-4 z-10'>
@@ -176,8 +178,7 @@ const LayoutSlug = props => {
         <div>
           {/* 标题栏 */}
           <TitleBar {...props} />
-          <PostMeta post={post} />
-          <div id='article-wrapper'>
+          <div id='article-wrapper' className='w-[90%] mx-auto'>
             <NotionPage post={post} />
             <ShareBar post={post} />
           </div>

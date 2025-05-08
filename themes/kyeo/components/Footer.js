@@ -6,7 +6,7 @@ import PoweredBy from '@/components/PoweredBy'
 
 export const Footer = props => {
   return (
-    <footer className='z-10 relative w-full bg-white px-6 space-y-1 border-t dark:border-hexo-black-gray dark:bg-hexo-black-gray '>
+    <footer className='z-10 relative w-full px-6 space-y-1 bg-black dark:bg-white text-white dark:text-black'>
       <DarkModeButton className='text-center pt-4' />
 
       <div className='container mx-auto max-w-4xl py-6 md:flex flex-wrap md:flex-no-wrap md:justify-between items-center text-sm'>

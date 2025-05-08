@@ -1,10 +1,11 @@
+import { useState } from 'react'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
 import { MenuItemDrop } from './MenuItemDrop'
 
 /**
- * 导航菜单列表
+ * 导航菜单列表（带响应式折叠功能）
  * @param {*} props
  * @returns
  */
@@ -55,18 +56,58 @@ export const MenuList = props => {
     return null
   }
 
+  return <ResponsiveMenu links={links} locale={locale} />
+}
+
+/**
+ * 响应式菜单组件（含移动端折叠）
+ */
+const ResponsiveMenu = ({ links, locale }) => {
+  const [isOpen, setIsOpen] = useState(false)
+
   return (
-    <nav className='w-full bg-white md:pt-0 px-6 relative z-20 border-t border-b border-gray-light dark:border-hexo-black-gray dark:bg-black'>
-      <div className='mx-auto max-w-4xl md:flex justify-between items-center text-sm md:text-md md:justify-start'>
-        <ul className='w-full text-center md:text-left flex flex-wrap justify-center items-stretch md:justify-start md:items-start'>
+    <nav className='w-full px-6 relative z-20 bg-black dark:bg-white text-white dark:text-black'>
+      <div className='mx-auto max-w-4xl flex justify-between items-center text-sm md:text-md py-2'>
+        {/* 桌面菜单 */}
+        <ul className='hidden md:flex flex-col space-y-2 text-lg text-left'>
           {links.map((link, index) => (
             <MenuItemDrop key={index} link={link} />
           ))}
         </ul>
-        {/* <div className="w-full md:w-1/3 text-center md:text-right"> */}
-        {/* <!-- extra links --> */}
-        {/* </div> */}
+
+        {/* 手机菜单按钮 */}
+        <div className='md:hidden flex justify-end w-full'>
+          <button
+            onClick={() => setIsOpen(true)}
+            className='text-gray-700 focus:outline-none p-2'>
+            <i className='fas fa-bars text-xl' />
+          </button>
+        </div>
       </div>
+
+      {/* 折叠菜单面板 */}
+      {isOpen && (
+        <div className='fixed inset-0 z-50 flex flex-col items-center pt-20 px-6 space-y-6 text-lg transition-all duration-300 overflow-y-auto bg-black dark:bg-white text-white dark:text-black'>
+          {/* 标题栏 */}
+          <div className='absolute top-0 left-0 right-0 bg-white border-b py-4 px-6 flex justify-between items-center dark:bg-black dark:border-hexo-black-gray'>
+            <span className='font-bold'>{locale.COMMON.MENU}</span>
+            <button onClick={() => setIsOpen(false)} className='text-gray-700'>
+              <i className='fas fa-times text-xl' />
+            </button>
+          </div>
+
+          {/* 菜单项 */}
+          <ul className='w-full space-y-4 mt-16'>
+            {links.map((link, index) => (
+              <li key={index} className='w-full'>
+                <MenuItemDrop link={link} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      
     </nav>
   )
 }

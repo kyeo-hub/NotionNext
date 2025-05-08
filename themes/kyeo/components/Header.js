@@ -8,7 +8,7 @@ import Link from 'next/link'
  */
 export const Header = props => {
   return (
-    <header className='w-full px-6 bg-white  dark:bg-black relative z-20'>
+    <header className='w-full px-6 bg-black dark:bg-white text-white dark:text-black relative z-20'>
       <div className='mx-auto max-w-4xl md:flex justify-between items-center'>
         <Link
           href='/'
