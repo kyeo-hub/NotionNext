@@ -12,15 +12,15 @@ module.exports = {
   theme: {
     fontFamily: fontFamilies,
     screens: {
-      sm: '540px',
+      sm: '480px',
       // => @media (min-width: 576px) { ... }
-      md: '720px',
+      md: '650px',
       // => @media (min-width: 768px) { ... }
-      lg: '960px',
+      lg: '1081px',
       // => @media (min-width: 992px) { ... }
-      xl: '1140px',
+      xl: '1200px',
       // => @media (min-width: 1200px) { ... }
-      '2xl': '1536px'
+      '2xl': '1400px'
     },
     container: {
       center: true,

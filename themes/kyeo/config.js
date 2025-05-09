@@ -14,6 +14,13 @@ const CONFIG = {
 
   // 文章页面布局
   EXAMPLE_ARTICLE_LAYOUT_VERTICAL: false, // 文章详情，左右布局改为上下布局
-  EXAMPLE_ARTICLE_HIDDEN_NOTIFICATION: false // 文章详情隐藏公告
+  EXAMPLE_ARTICLE_HIDDEN_NOTIFICATION: false, // 文章详情隐藏公告
+
+  // BLOG设置
+  EXAMPLE_BLOG_AVATAR: '/avatar.png',
+  EXAMPLE_BLOG_BIO: '一个正在努力成长中的程序猿',
+  EXAMPLE_BLOG_NOTICE: '欢迎访问我的博客',
+  EXAMPLE_BLOG_TITLE: 'Kyeo Writing Space ✍🏻'
+
 }
 export default CONFIG

@@ -20,6 +20,8 @@ import { SideBar } from './components/SideBar'
 import TitleBar from './components/TitleBar'
 import CONFIG from './config'
 import { Style } from './style'
+import { Footer } from './components/Footer'
+
 
 
 /**
@@ -50,7 +52,7 @@ const LayoutBase = props => {
       <div id='container-inner' className='w-full relative z-10'>
         <div
           id='container-wrapper'
-          className={`relative mx-auto justify-center md:flex py-8 px-2
+          className={`relative mx-auto justify-center lg:flex
           ${LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : ''} 
           ${LAYOUT_VERTICAL ? 'items-center flex-col' : 'items-start'} 
           `}>
@@ -59,7 +61,7 @@ const LayoutBase = props => {
             <div
               className={`${LAYOUT_VERTICAL
                 ? 'flex space-x-0 md:space-x-2 md:flex-row flex-col w-full max-w-5xl justify-center xl:px-14 lg:px-4'
-                : 'lg:w-96 md:w-80 w-full fixed top-0 left-0 h-screen overflow-y-auto z-20 bg-black dark:bg-white text-white dark:text-black'
+                : 'xl:w-96 lg:w-80 w-full lg:fixed lg:top-0 lg:left-0 lg:h-screen overflow-y-auto z-20 bg-black dark:bg-white text-white dark:text-black'
                 }`}>
               <div className='flex justify-center'>
                 <SideBar {...props} />
@@ -69,7 +71,7 @@ const LayoutBase = props => {
           )}
           {/* 内容 */}
           <div
-            className={`${fullWidth ? '' : LAYOUT_VERTICAL ? 'max-w-5xl' : 'md:ml-80 lg:ml-96 flex-1 min-w-0'} w-full xl:px-14 lg:px-4`}>
+            className={`${fullWidth ? '' : LAYOUT_VERTICAL ? 'max-w-5xl' : 'lg:ml-80 xl:ml-96 flex-1 min-w-0'} w-full`}>
             <Transition
               show={!onLoading}
               appear={true}
@@ -84,6 +86,10 @@ const LayoutBase = props => {
               {props.slotTop}
               {children}
             </Transition>
+          </div>
+          {/* 页脚 */}
+          <div className='xl:w-96 lg:w-80 w-full relative lg:fixed lg:bottom-0 lg:left-0 lg:z-40'>
+            <Footer {...props} />
           </div>
 
 
@@ -108,10 +114,41 @@ const LayoutBase = props => {
 /**
  * 首页
  * @param {*} props
- * @returns 此主题首页就是列表
+ * @returns 此主题首页块结构
  */
 const LayoutIndex = props => {
-  return <LayoutPostList {...props} />
+  return (
+    <div className='w-full md:h-screen'>
+      {/* 响应式网格容器 */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-3 gap-0 w-full h-full">
+
+        {/* first-project */}
+        <div className="lg:col-span-1 xl:col-span-1 h-[35vh] bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+          First Project
+        </div>
+
+        {/* about-us */}
+        <div className="lg:col-span-3 xl:col-span-2 lg:row-span-1 xl:row-span-1 h-[35vh] bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+          About Us
+        </div>
+
+        {/* three-projects (3 rows on mobile, spans multiple cols) */}
+        <div className="md:col-span-2 lg:col-span-4 xl:col-span-3 h-[35vh] bg-blue-200 dark:bg-blue-900 flex items-center justify-center">
+          Three Projects
+        </div>
+
+        {/* writing */}
+        <div className="md:col-span-1 lg:col-span-2 xl:col-span-2 h-[35vh] md:h-[30vh]  bg-green-200 dark:bg-green-900 flex items-center justify-center">
+          Writing
+        </div>
+
+        {/* instagram */}
+        <div className="md:col-span-1 lg:col-span-2 xl:col-span-1 h-[35vh] md:h-[30vh]  bg-pink-200 dark:bg-pink-900 flex items-center justify-center">
+          Instagram
+        </div>
+      </div>
+    </div>
+  )
 }
 
 /**
@@ -175,7 +212,7 @@ const LayoutSlug = props => {
       {lock ? (
         <PostLock validPassword={validPassword} />
       ) : post && (
-        <div>
+        <div className='lg:pt-14 lg:px-14'>
           {/* 标题栏 */}
           <TitleBar {...props} />
           <div id='article-wrapper' className='w-[90%] mx-auto'>

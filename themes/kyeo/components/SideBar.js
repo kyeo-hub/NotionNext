@@ -8,7 +8,6 @@ import Announcement from './Announcement'
 import Catalog from './Catalog'
 import { Header } from './Header'
 import { MenuList } from './MenuList'
-import { Footer } from './Footer'
 
 
 const ExampleRecentComments = dynamic(
@@ -39,7 +38,7 @@ export const SideBar = props => {
 
   return (
     <>
-      <div className='w-lg:w-96 md:w-80 w-11/12 h-screen flex flex-col md:pt-16 bg-black dark:bg-white text-white dark:text-black'>
+      <div className='flex flex-col lg:pt-16 bg-black dark:bg-white text-white dark:text-black'>
 
         <div className='flex-grow overflow-y-auto'>
           {/* 页头 */}
@@ -78,11 +77,6 @@ export const SideBar = props => {
           </ul>
         </div>
       </aside> */}
-
-        {/* 页脚 */}
-        <div className='shrink-0'>
-          <Footer {...props} />
-        </div>
       </div>
     </>
   )
