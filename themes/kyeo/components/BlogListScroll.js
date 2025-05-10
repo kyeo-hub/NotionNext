@@ -11,7 +11,8 @@ import BlogItem from './BlogItem'
  * @returns
  */
 export const BlogListScroll = props => {
-  const { posts } = props
+  const { posts, categoryOptions, category, tag } = props
+  console.log('BlogListScroll', category)
   const { locale, NOTION_CONFIG } = useGlobal()
   const [page, updatePage] = useState(1)
   const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
@@ -47,7 +48,6 @@ export const BlogListScroll = props => {
       }
     }, 500)
   )
-  const showPageCover = siteConfig('EXAMPLE_POST_LIST_COVER', null, CONFIG)
 
   useEffect(() => {
     window.addEventListener('scroll', scrollTrigger)
@@ -76,26 +76,27 @@ export const BlogListScroll = props => {
           </p>
 
           {/* 分类菜单 */}
-          {/* <div className="flex justify-center flex-wrap gap-3 mt-6">
-            {['技术', '设计', '生活', '旅行', '摄影'].map((cat, index) => (
+          <div id='category-list' className='duration-200 flex flex-wrap'>
+            {categoryOptions?.map(category => (
               <Link
-                key={index}
-                href={`/category/${cat}`}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 capitalize
-            ${cat === '技术'
-                    ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md hover:from-blue-600 hover:to-indigo-700'
-                    : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600'
-                  }
-          `}
-              >
-                {cat}
+                key={category.name}
+                href={`/category/${category.name}`}
+                passHref
+                legacyBehavior>
+                <div
+                  className={
+                    'hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'
+                  }>
+                  <i className='mr-4 fas fa-folder' />
+                  {category.name}({category.count})
+                </div>
               </Link>
-            ))} 
-          </div>*/}
+            ))}
+          </div>
         </div>
 
       </div>
-      <div className="homePosts grid gap-8 md:grid-cols-2 2xl:grid-cols-3">
+      <div className="homePosts flex flex-col md:grid md:gap-8 md:grid-cols-6">
         {postsToShow?.map((post, index) => (
           <BlogItem key={post.id} post={post} index={index} />
         ))}

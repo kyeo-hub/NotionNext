@@ -94,23 +94,21 @@ const nextConfig = {
   i18n: process.env.EXPORT
     ? undefined
     : {
-        defaultLocale: BLOG.LANG,
-        // 支持的所有多语言,按需填写即可
-        locales: locales
-      },
+      defaultLocale: BLOG.LANG,
+      // 支持的所有多语言,按需填写即可
+      locales: locales
+    },
   images: {
-    // 图片压缩
     formats: ['image/avif', 'image/webp'],
-    // 允许next/image加载的图片 域名
-    domains: [
-      'gravatar.com',
-      'www.notion.so',
-      'avatars.githubusercontent.com',
-      'images.unsplash.com',
-      'source.unsplash.com',
-      'p1.qhimg.com',
-      'webmention.io',
-      'ko-fi.com'
+    remotePatterns: [
+      { protocol: 'https', hostname: 'gravatar.com' },
+      { protocol: 'https', hostname: 'www.notion.so' },
+      { protocol: 'https', hostname: 'avatars.githubusercontent.com' },
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'source.unsplash.com' },
+      { protocol: 'https', hostname: 'p1.qhimg.com' },
+      { protocol: 'https', hostname: 'webmention.io' },
+      { protocol: 'https', hostname: 'ko-fi.com' }
     ]
   },
 
@@ -118,84 +116,84 @@ const nextConfig = {
   redirects: process.env.EXPORT
     ? undefined
     : async () => {
-        return [
-          {
-            source: '/feed',
-            destination: '/rss/feed.xml',
-            permanent: true
-          }
-        ]
-      },
+      return [
+        {
+          source: '/feed',
+          destination: '/rss/feed.xml',
+          permanent: true
+        }
+      ]
+    },
   // 重写url
   rewrites: process.env.EXPORT
     ? undefined
     : async () => {
-        // 处理多语言重定向
-        const langsRewrites = []
-        if (BLOG.NOTION_PAGE_ID.indexOf(',') > 0) {
-          const siteIds = BLOG.NOTION_PAGE_ID.split(',')
-          const langs = []
-          for (let index = 0; index < siteIds.length; index++) {
-            const siteId = siteIds[index]
-            const prefix = extractLangPrefix(siteId)
-            // 如果包含前缀 例如 zh , en 等
-            if (prefix) {
-              langs.push(prefix)
-            }
-            console.log('[Locales]', siteId)
+      // 处理多语言重定向
+      const langsRewrites = []
+      if (BLOG.NOTION_PAGE_ID.indexOf(',') > 0) {
+        const siteIds = BLOG.NOTION_PAGE_ID.split(',')
+        const langs = []
+        for (let index = 0; index < siteIds.length; index++) {
+          const siteId = siteIds[index]
+          const prefix = extractLangPrefix(siteId)
+          // 如果包含前缀 例如 zh , en 等
+          if (prefix) {
+            langs.push(prefix)
           }
-
-          // 映射多语言
-          // 示例： source: '/:locale(zh|en)/:path*' ; :locale() 会将语言放入重写后的 `?locale=` 中。
-          langsRewrites.push(
-            {
-              source: `/:locale(${langs.join('|')})/:path*`,
-              destination: '/:path*'
-            },
-            // 匹配没有路径的情况，例如 [domain]/zh 或 [domain]/en
-            {
-              source: `/:locale(${langs.join('|')})`,
-              destination: '/'
-            },
-            // 匹配没有路径的情况，例如 [domain]/zh/ 或 [domain]/en/
-            {
-              source: `/:locale(${langs.join('|')})/`,
-              destination: '/'
-            }
-          )
+          console.log('[Locales]', siteId)
         }
 
-        return [
-          ...langsRewrites,
-          // 伪静态重写
+        // 映射多语言
+        // 示例： source: '/:locale(zh|en)/:path*' ; :locale() 会将语言放入重写后的 `?locale=` 中。
+        langsRewrites.push(
           {
-            source: '/:path*.html',
+            source: `/:locale(${langs.join('|')})/:path*`,
             destination: '/:path*'
+          },
+          // 匹配没有路径的情况，例如 [domain]/zh 或 [domain]/en
+          {
+            source: `/:locale(${langs.join('|')})`,
+            destination: '/'
+          },
+          // 匹配没有路径的情况，例如 [domain]/zh/ 或 [domain]/en/
+          {
+            source: `/:locale(${langs.join('|')})/`,
+            destination: '/'
           }
-        ]
-      },
+        )
+      }
+
+      return [
+        ...langsRewrites,
+        // 伪静态重写
+        {
+          source: '/:path*.html',
+          destination: '/:path*'
+        }
+      ]
+    },
   headers: process.env.EXPORT
     ? undefined
     : async () => {
-        return [
-          {
-            source: '/:path*{/}?',
-            headers: [
-              { key: 'Access-Control-Allow-Credentials', value: 'true' },
-              { key: 'Access-Control-Allow-Origin', value: '*' },
-              {
-                key: 'Access-Control-Allow-Methods',
-                value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT'
-              },
-              {
-                key: 'Access-Control-Allow-Headers',
-                value:
-                  'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-              }
-            ]
-          }
-        ]
-      },
+      return [
+        {
+          source: '/:path*{/}?',
+          headers: [
+            { key: 'Access-Control-Allow-Credentials', value: 'true' },
+            { key: 'Access-Control-Allow-Origin', value: '*' },
+            {
+              key: 'Access-Control-Allow-Methods',
+              value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT'
+            },
+            {
+              key: 'Access-Control-Allow-Headers',
+              value:
+                'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+            }
+          ]
+        }
+      ]
+    },
   webpack: (config, { dev, isServer }) => {
     // 动态主题：添加 resolve.alias 配置，将动态路径映射到实际路径
     config.resolve.alias['@'] = path.resolve(__dirname)

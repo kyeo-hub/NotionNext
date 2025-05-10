@@ -12,7 +12,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import BlogListArchive from './components/BlogListArchive'
-import { BlogListPage } from './components/BlogListPage'
 import { BlogListScroll } from './components/BlogListScroll'
 import { PostLock } from './components/PostLock'
 import SearchInput from './components/SearchInput'
@@ -61,17 +60,14 @@ const LayoutBase = props => {
             <div
               className={`${LAYOUT_VERTICAL
                 ? 'flex space-x-0 md:space-x-2 md:flex-row flex-col w-full max-w-5xl justify-center xl:px-14 lg:px-4'
-                : 'xl:w-96 lg:w-80 w-full lg:fixed lg:top-0 lg:left-0 lg:h-screen overflow-y-auto z-20 bg-black dark:bg-white text-white dark:text-black'
+                : 'lg:w-72 w-full lg:fixed lg:top-0 lg:left-0 lg:h-screen overflow-y-auto z-20 bg-black dark:bg-white text-white dark:text-black'
                 }`}>
-              <div className='flex justify-center'>
-                <SideBar {...props} />
-              </div>
-
+              <SideBar {...props} />
             </div>
           )}
           {/* 内容 */}
           <div
-            className={`${fullWidth ? '' : LAYOUT_VERTICAL ? 'max-w-5xl' : 'lg:ml-80 xl:ml-96 flex-1 min-w-0'} w-full`}>
+            className={`${fullWidth ? '' : LAYOUT_VERTICAL ? 'max-w-5xl' : 'lg:ml-72 flex-1 min-w-0'} w-full`}>
             <Transition
               show={!onLoading}
               appear={true}
@@ -88,7 +84,7 @@ const LayoutBase = props => {
             </Transition>
           </div>
           {/* 页脚 */}
-          <div className='xl:w-96 lg:w-80 w-full relative lg:fixed lg:bottom-0 lg:left-0 lg:z-40'>
+          <div className='lg:w-72 w-full relative lg:fixed lg:bottom-0 lg:left-0 lg:z-40'>
             <Footer {...props} />
           </div>
 
@@ -157,25 +153,11 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutPostList = props => {
-  const { category, tag } = props
+  
 
   return (
     <>
-      {/* 显示分类 */}
-      {category && (
-        <div className='pb-12'>
-          <i className='mr-1 fas fa-folder-open' />
-          {category}
-        </div>
-      )}
-      {/* 显示标签 */}
-      {tag && <div className='pb-12'>#{tag}</div>}
-
-      {siteConfig('POST_LIST_STYLE') === 'page' ? (
-        <BlogListPage {...props} />
-      ) : (
-        <BlogListScroll {...props} />
-      )}
+      <BlogListScroll {...props} />
     </>
   )
 }

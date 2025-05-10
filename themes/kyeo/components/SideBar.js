@@ -38,9 +38,9 @@ export const SideBar = props => {
 
   return (
     <>
-      <div className='flex flex-col lg:pt-16 bg-black dark:bg-white text-white dark:text-black'>
+      <div className='lg:pt-16 bg-black dark:bg-white text-white dark:text-black'>
 
-        <div className='flex-grow overflow-y-auto'>
+        <div className='flex justify-between lg:flex lg:flex-col lg:flex-row'>
           {/* 页头 */}
           <Header {...props} />
           {/* 菜单 */}
