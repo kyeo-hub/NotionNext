@@ -17,6 +17,7 @@ export const BlogListScroll = props => {
   const [page, updatePage] = useState(1)
   const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
   const BLOG_TITLE = siteConfig('EXAMPLE_BLOG_TITLE', '探索灵感与创意', CONFIG)
+  const BLOG_BIO = siteConfig('EXAMPLE_BLOG_BIO', '这是一个展示文章分类的地方，你可以点击不同的分类来浏览相关内容。', CONFIG)
 
   let hasMore = false
   const postsToShow = posts
@@ -72,26 +73,41 @@ export const BlogListScroll = props => {
 
           {/* 简介文本 */}
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            这是一个展示文章分类的地方，你可以点击不同的分类来浏览相关内容。
+            {BLOG_BIO}
           </p>
 
-          {/* 分类菜单 */}
-          <div id='category-list' className='duration-200 flex flex-wrap'>
-            {categoryOptions?.map(category => (
-              <Link
-                key={category.name}
-                href={`/category/${category.name}`}
-                passHref
-                legacyBehavior>
-                <div
-                  className={
-                    'hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'
-                  }>
-                  <i className='mr-4 fas fa-folder' />
-                  {category.name}({category.count})
-                </div>
-              </Link>
-            ))}
+          {/* 分类菜单 - 包含 "全部" */}
+          <div id='category-list' className='duration-200 flex flex-wrap gap-3 pb-6'>
+            {/* 全部分类按钮 */}
+            <Link href='/blog/all' passHref legacyBehavior>
+              <div
+                className={`px-5 py-2 cursor-pointer rounded-full transition-all duration-300 ${!props.category || props.category === 'all'
+                  ? 'bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white shadow-lg font-bold'
+                  : 'text-gray-600 dark:text-gray-300 hover:bg-gradient-to-r hover:from-indigo-100 hover:to-purple-100 hover:text-indigo-600 dark:hover:text-indigo-400'
+                  }`}
+              >
+                <i className='mr-3 fas fa-folder-open' />
+                全部
+              </div>
+            </Link>
+
+            {/* 动态分类按钮 */}
+            {categoryOptions?.map((category) => {
+              const isActive = props.category === category.name
+              return (
+                <Link key={category.name} href={`/blog/${category.name}`} passHref legacyBehavior>
+                  <div
+                    className={`px-5 py-2 cursor-pointer rounded-full transition-all duration-300 ${isActive
+                      ? 'bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white shadow-lg font-bold'
+                      : 'text-gray-600 dark:text-gray-300 hover:bg-gradient-to-r hover:from-indigo-100 hover:to-purple-100 hover:text-indigo-600 dark:hover:text-indigo-400'
+                      }`}
+                  >
+                    <i className='mr-3 fas fa-folder' />
+                    {category.name}( {category.count} )
+                  </div>
+                </Link>
+              )
+            })}
           </div>
         </div>
 
