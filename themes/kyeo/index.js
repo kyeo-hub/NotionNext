@@ -209,6 +209,50 @@ const LayoutSlug = props => {
 }
 
 /**
+ * Project单页
+ * @param {*} props
+ * @returns
+ */
+const LayoutProject = props => {
+  const { post, lock, validPassword } = props
+  const router = useRouter()
+  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(
+        () => {
+          if (isBrowser) {
+            const article = document.querySelector('#article-wrapper #notion-article')
+            if (!article) {
+              router.push('/404').then(() => {
+                console.warn('找不到页面', router.asPath)
+              })
+            }
+          }
+        },
+        waiting404
+      )
+    }
+  }, [post])
+  return (
+    <>
+      {lock ? (
+        <PostLock validPassword={validPassword} />
+      ) : post && (
+        <div>
+          {/* 标题栏 */}
+          <TitleBar {...props} />
+          <div id='Weapons-wrapper' className='bg-gray-300 px-4 md:px-8 lg:px-16 xl:px-48'>
+            <NotionPage post={post} />
+          </div>
+        </div>
+      )}
+    </>
+  )
+}
+
+/**
  * 404页
  * @param {*} props
  * @returns
@@ -365,5 +409,6 @@ export {
   LayoutSearch,
   LayoutSlug,
   LayoutTagIndex,
+  LayoutProject,
   CONFIG as THEME_CONFIG
 }
