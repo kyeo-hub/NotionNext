@@ -12,12 +12,11 @@ import BlogItem from './BlogItem'
  */
 export const BlogListScroll = props => {
   const { posts, categoryOptions, category, tag } = props
-  console.log('BlogListScroll', category)
   const { locale, NOTION_CONFIG } = useGlobal()
   const [page, updatePage] = useState(1)
   const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
-  const BLOG_TITLE = siteConfig('EXAMPLE_BLOG_TITLE', '探索灵感与创意', CONFIG)
-  const BLOG_BIO = siteConfig('EXAMPLE_BLOG_BIO', '这是一个展示文章分类的地方，你可以点击不同的分类来浏览相关内容。', CONFIG)
+  const BLOG_TITLE = siteConfig('BLOG_TITLE', '探索灵感与创意', CONFIG)
+  const BLOG_BIO = siteConfig('BLOG_BIO', '这是一个展示文章分类的地方，你可以点击不同的分类来浏览相关内容。', CONFIG)
 
   let hasMore = false
   const postsToShow = posts

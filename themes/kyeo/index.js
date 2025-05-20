@@ -10,16 +10,19 @@ import { isBrowser } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import BlogListArchive from './components/BlogListArchive'
 import { BlogListScroll } from './components/BlogListScroll'
+import { ItemList } from './components/ItemList'
 import { PostLock } from './components/PostLock'
 import SearchInput from './components/SearchInput'
 import { SideBar } from './components/SideBar'
 import TitleBar from './components/TitleBar'
+import TitleBg from './components/TitleBg'
 import CONFIG from './config'
 import { Style } from './style'
 import { Footer } from './components/Footer'
+import ItemItem from './components/ItemItem'
 
 
 
@@ -35,8 +38,7 @@ const LayoutBase = props => {
   const { onLoading, fullWidth, locale } = useGlobal()
 
   // 文章详情页左右布局改为上下布局
-  const LAYOUT_VERTICAL =
-    post && siteConfig('EXAMPLE_ARTICLE_LAYOUT_VERTICAL', false, CONFIG)
+  const LAYOUT_VERTICAL = siteConfig('EXAMPLE_ARTICLE_LAYOUT_VERTICAL', false, CONFIG) && post
 
   // 网站左右布局颠倒
   const LAYOUT_SIDEBAR_REVERSE = siteConfig('LAYOUT_SIDEBAR_REVERSE', false)
@@ -87,12 +89,8 @@ const LayoutBase = props => {
           <div className='lg:w-72 w-full relative lg:fixed lg:bottom-0 lg:left-0 lg:z-40'>
             <Footer {...props} />
           </div>
-
-
         </div>
       </div>
-
-
 
       {/* 回顶按钮 */}
       <div className='fixed right-4 bottom-4 z-10'>
@@ -109,39 +107,174 @@ const LayoutBase = props => {
 
 /**
  * 首页
+ * 重定向到Home页
+ * @param {*} props
+ * @returns
+ */
+const LayoutIndex = props => {
+  const router = useRouter()
+  const index = 'home'
+  const [hasRedirected, setHasRedirected] = useState(false) // 添加状态追踪是否已重定向
+
+  useEffect(() => {
+    const tryRedirect = async () => {
+      if (!hasRedirected) {
+        // 仅当未重定向时执行
+        setHasRedirected(true) // 更新状态，防止多次执行
+
+        // 重定向到指定文章
+        router.push(index).then(() => {
+          setTimeout(() => {
+            const article = document.querySelector(
+              '#article-wrapper #notion-article'
+            )
+            if (!article) {
+              console.log(
+                '请检查您的Notion数据库中是否包含此slug页面： ',
+                index
+              )
+
+              // 显示错误信息
+              const containerInner = document.querySelector(
+                '#theme-gitbook #container-inner'
+              )
+              const newHTML = `<h1 class="text-3xl pt-12 dark:text-gray-300">配置有误</h1><blockquote class="notion-quote notion-block-ce76391f3f2842d386468ff1eb705b92"><div>请在您的notion中添加一个slug为${index}的文章</div></blockquote>`
+              containerInner?.insertAdjacentHTML('afterbegin', newHTML)
+            }
+          }, 2000)
+        })
+      }
+    }
+
+    if (index) {
+      console.log('重定向', index)
+      tryRedirect()
+    } else {
+      console.log('无重定向', index)
+    }
+  }, [index, hasRedirected]) // 将 hasRedirected 作为依赖确保状态变更时更新
+
+  return null // 不渲染任何内容
+}
+
+/**
+ * 首页
  * @param {*} props
  * @returns 此主题首页块结构
  */
-const LayoutIndex = props => {
+// const LayoutHome = props => {
+//   const posts = props.posts?.slice(0, 7)
+//   const firstProject = posts[0]
+//   const secondProject = posts[1]
+//   const thirdProject = posts[2]
+//   const fourthProject = posts[3]
+//   const fifthProject = posts[4]
+//   const aboutPage = posts[5]
+//   const writing = posts[6]
+
+//   return (
+//     <div className='w-full md:h-screen'>
+//       {/* 响应式网格容器 */}
+//       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 xl:grid-cols-3 gap-0 w-full h-full">
+
+//         {/* first-project */}
+//         <div className="lg:col-span-3 xl:col-span-1 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+//           {firstProject ? (
+//             <div className='w-full z-20'><ItemItem post={firstProject} /></div>
+//           ) : (
+//             <div className="text-gray-500">暂无项目</div>
+//           )}
+//         </div>
+
+//         {/* about-us */}
+//         <div className="lg:col-span-3 xl:col-span-2 lg:row-span-1 xl:row-span-1 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+//           {aboutPage ? (
+//             <div className='w-full z-20'><ItemItem post={aboutPage} /></div>
+//           ) : (
+//             <div className="text-gray-500">暂无项目</div>
+//           )
+//           }
+//         </div>
+
+//         {/* three-projects (3 rows on mobile, spans multiple cols) */}
+//         <div className="md:col-span-2 lg:col-span-1 xl:col-span-1 bg-blue-200 dark:bg-blue-900 flex items-center justify-center">
+//           {secondProject ? (
+//             <div className='w-full z-20'><ItemItem post={secondProject} /></div>
+//           ) : (
+//             <div className="text-gray-500">暂无项目</div>
+//           )}
+//         </div>
+//         <div className="md:col-span-2 lg:col-span-1 xl:col-span-1 bg-blue-200 dark:bg-blue-900 flex items-center justify-center">
+//           {thirdProject ? (
+//             <div className='w-full z-20'><ItemItem post={thirdProject} /></div>
+//           ) : (
+//             <div className="text-gray-500">暂无项目</div>
+//           )}
+//         </div>
+//         <div className="md:col-span-2 lg:col-span-1 xl:col-span-1 bg-blue-200 dark:bg-blue-900 flex items-center justify-center">
+//           {fourthProject ? (
+//             <div className='w-full z-20'><ItemItem post={fourthProject} /></div>
+//           ) : (
+//             <div className="text-gray-500">暂无项目</div>
+//           )}
+//         </div>
+
+//         {/* writing */}
+//         <div className="md:col-span-1 lg:col-span-3 xl:col-span-2 bg-green-200 dark:bg-green-900 flex items-center justify-center">
+//           {writing ? (
+//             <div className='w-full z-20'><ItemItem post={writing} /></div>
+//           ) : (
+//             <div className="text-gray-500">暂无文章</div>
+//           )}
+//         </div>
+
+//         {/* end-project */}
+//         <div className="md:col-span-1 lg:col-span-3 xl:col-span-1 bg-pink-200 dark:bg-pink-900 flex items-center justify-center">
+//           {fifthProject ? (
+//             <div className='w-full z-20'><ItemItem post={fifthProject} /></div>
+//           ) : (
+//             <div className="text-gray-500">暂无文章</div>
+//           )}
+//         </div>
+//       </div>
+//     </div>
+//   )
+// }
+const LayoutHome = props => {
+  const posts = props.posts
+  // 定义展示顺序：item[1], about, item[2], item[3], item[4], post, item[5]
+  const displayOrder = [0, 5, 1, 2, 3, 6, 4]
+
+  // 每个区块对应的样式和 key（可自定义）
+  const blockConfig = [
+    { key: 'project-1', col: 'lg:col-span-3 xl:col-span-1' },
+    { key: 'about-us', col: 'lg:col-span-3 xl:col-span-2' },
+    { key: 'project-2', col: 'md:col-span-2 lg:col-span-1 xl:col-span-1' },
+    { key: 'project-3', col: 'md:col-span-2 lg:col-span-1 xl:col-span-1' },
+    { key: 'project-4', col: 'md:col-span-2 lg:col-span-1 xl:col-span-1' },
+    { key: 'writing', col: 'md:col-span-1 lg:col-span-3 xl:col-span-2' },
+    { key: 'project-5', col: 'md:col-span-1 lg:col-span-3 xl:col-span-1' }
+  ]
+
   return (
     <div className='w-full md:h-screen'>
       {/* 响应式网格容器 */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-3 gap-0 w-full h-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 xl:grid-cols-3 gap-0 w-full h-full">
+        {blockConfig.map((config, idx) => {
+          const post = posts[displayOrder[idx]]
+          return (
+            <div
+              key={config.key}
+              className={`${config.col} bg-gray-200 dark:bg-gray-700 flex items-center justify-center`}
+            >
 
-        {/* first-project */}
-        <div className="lg:col-span-1 xl:col-span-1 h-[35vh] bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-          First Project
-        </div>
+              <div className='w-full z-20'>
+                <ItemItem post={post} />
+              </div>
 
-        {/* about-us */}
-        <div className="lg:col-span-3 xl:col-span-2 lg:row-span-1 xl:row-span-1 h-[35vh] bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-          About Us
-        </div>
-
-        {/* three-projects (3 rows on mobile, spans multiple cols) */}
-        <div className="md:col-span-2 lg:col-span-4 xl:col-span-3 h-[35vh] bg-blue-200 dark:bg-blue-900 flex items-center justify-center">
-          Three Projects
-        </div>
-
-        {/* writing */}
-        <div className="md:col-span-1 lg:col-span-2 xl:col-span-2 h-[35vh] md:h-[30vh]  bg-green-200 dark:bg-green-900 flex items-center justify-center">
-          Writing
-        </div>
-
-        {/* instagram */}
-        <div className="md:col-span-1 lg:col-span-2 xl:col-span-1 h-[35vh] md:h-[30vh]  bg-pink-200 dark:bg-pink-900 flex items-center justify-center">
-          Instagram
-        </div>
+            </div>
+          )
+        })}
       </div>
     </div>
   )
@@ -153,11 +286,24 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutPostList = props => {
-  
 
   return (
     <>
       <BlogListScroll {...props} />
+    </>
+  )
+}
+
+/**
+ * 项目列表
+ * @param {*} props
+ * @returns
+ */
+const LayoutItemList = props => {
+
+  return (
+    <>
+      <ItemList {...props} />
     </>
   )
 }
@@ -209,7 +355,7 @@ const LayoutSlug = props => {
 }
 
 /**
- * Project单页
+ * 项目详情页
  * @param {*} props
  * @returns
  */
@@ -241,8 +387,8 @@ const LayoutProject = props => {
         <PostLock validPassword={validPassword} />
       ) : post && (
         <div>
-          {/* 标题栏 */}
-          <TitleBar {...props} />
+          {/* 大图标题 */}
+          <TitleBg {...props} />
           <div id='Weapons-wrapper' className='bg-gray-300 px-4 md:px-8 lg:px-16 xl:px-48'>
             <NotionPage post={post} />
           </div>
@@ -405,10 +551,12 @@ export {
   LayoutBase,
   LayoutCategoryIndex,
   LayoutIndex,
+  LayoutHome,
   LayoutPostList,
   LayoutSearch,
   LayoutSlug,
   LayoutTagIndex,
+  LayoutItemList,
   LayoutProject,
   CONFIG as THEME_CONFIG
 }

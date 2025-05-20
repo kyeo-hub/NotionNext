@@ -1,6 +1,5 @@
 import LazyImage from '@/components/LazyImage'
 import NotionIcon from '@/components/NotionIcon'
-import TwikooCommentCount from '@/components/TwikooCommentCount'
 import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
 import CONFIG from '../config'
@@ -23,7 +22,7 @@ const BlogItem = ({ post, index }) => {
         if ([1, 2, 3].includes(index % 6)) return 'col-span-2'; // 1/3
         if ([4, 5].includes(index % 6)) return 'col-span-3'; // 1/2
         break;
-  
+
       case 'xl':
         if (index % 3 === 0) return 'col-span-6'; // 全宽
         if (index % 3 === 1 || index % 3 === 2) return 'col-span-3'; // 半宽
@@ -36,7 +35,7 @@ const BlogItem = ({ post, index }) => {
         if (index % 3 === 0) return 'col-span-6'; // 全宽
         if (index % 3 === 1 || index % 3 === 2) return 'col-span-3'; // 半宽
         break;
-  
+
       default:
         return ''; // 默认单列
     }
@@ -55,7 +54,7 @@ const BlogItem = ({ post, index }) => {
     imageClassName = 'md:w-7/12 w-full h-full min-h-full overflow-hidden rounded-l-md'
     contentClassName = 'md:w-5/12'
   }
-  
+
   return (
     <article
       className={`${colSpanClass} flex ${isFullWidthCard ? 'flex-col md:flex-row max-h-[300px] md:max-h-[240px]' : 'flex-col'} mx-6 my-4 md:m-0 bg-white dark:bg-gray-800 rounded-md shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300`}>
@@ -64,7 +63,9 @@ const BlogItem = ({ post, index }) => {
       {showPageCover && (
         <div className={`${imageClassName}`}>
           <Link href={post?.href} passHref legacyBehavior>
-            <LazyImage src={post?.pageCoverThumbnail} className="w-full h-full object-cover" />
+            <div>
+              <LazyImage src={post?.pageCoverThumbnail} className="w-full h-full object-cover" />
+            </div>
           </Link>
         </div>
       )}
@@ -74,7 +75,7 @@ const BlogItem = ({ post, index }) => {
 
         {/* 分类 */}
         {post.category && (
-          <Link href={`/category/${post.category}`} className="text-gray-700 dark:text-gray-300 hover:underline mb-2">
+          <Link href={`/blog/${post.category}`} className="text-gray-700 dark:text-gray-300 hover:underline mb-2">
             {post.category}
           </Link>
         )}
