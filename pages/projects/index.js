@@ -95,24 +95,24 @@ const Slug = props => {
     )
 }
 
-export async function getStaticPaths() {
-    if (!BLOG.isProd) {
-        return {
-            paths: [],
-            fallback: true
-        }
-    }
+// export async function getStaticPaths() {
+//     if (!BLOG.isProd) {
+//         return {
+//             paths: [],
+//             fallback: true
+//         }
+//     }
 
-    const from = 'slug-paths'
-    const { allPages } = await getGlobalData({ from })
-    const paths = allPages
-        ?.filter(row => checkSlugHasNoSlash(row))
-        .map(row => ({ params: { prefix: row.slug } }))
-    return {
-        paths: paths,
-        fallback: true
-    }
-}
+//     const from = 'slug-paths'
+//     const { allPages } = await getGlobalData({ from })
+//     const paths = allPages
+//         ?.filter(row => checkSlugHasNoSlash(row))
+//         .map(row => ({ params: { prefix: row.slug } }))
+//     return {
+//         paths: paths,
+//         fallback: true
+//     }
+// }
 
 export async function getStaticProps({ params: { prefix }, locale }) {
     let fullSlug = prefix
