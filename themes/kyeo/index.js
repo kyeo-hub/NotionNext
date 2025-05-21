@@ -268,7 +268,7 @@ const LayoutHome = props => {
               className={`${config.col} bg-gray-200 dark:bg-gray-700 flex items-center justify-center`}
             >
 
-              <div className='w-full z-20'>
+              <div className='w-full'>
                 <ItemItem post={post} />
               </div>
 

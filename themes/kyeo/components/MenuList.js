@@ -88,7 +88,7 @@ const ResponsiveMenu = ({ links, locale,avatar }) => {
 
       {/* 折叠菜单面板 */}
 
-      <div className={`${isOpen ? '' : 'hidden'} fixed inset-0 z-50 flex flex-col items-center pt-20 px-6 space-y-6 text-lg transition-all duration-300 overflow-y-hidden bg-black dark:bg-white text-white dark:text-black`}>
+      <div className={`${isOpen ? '' : 'hidden'} fixed inset-0 z-[100] flex flex-col items-center pt-20 px-6 space-y-6 text-lg transition-all duration-300 overflow-y-hidden bg-black dark:bg-white text-white dark:text-black`}>
         {/* 标题栏 */}
         <div className='absolute top-0 left-0 right-0 bg-black py-4 px-6 flex justify-between items-center dark:bg-white'>
           <Image
@@ -106,7 +106,7 @@ const ResponsiveMenu = ({ links, locale,avatar }) => {
         </div>
 
         {/* 菜单项 */}
-        <ul className='w-full space-y-4 mt-16'>
+        <ul className='w-full space-y-4 mt-16 z-20'>
           {links.map((link, index) => (
             <li key={link.id || index} className='w-full flex justify-center' onClick={() => setIsOpen(false)}>
               <MenuItemDrop link={link} />
